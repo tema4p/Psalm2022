@@ -1,0 +1,380 @@
+@import "../../../theme/variables";
+
+:host {
+  hyphens: auto;
+}
+
+::ng-deep {
+  .namepsal + p, .isTitle {
+    color: #E50000;
+    text-align: center;
+    display: block;
+  }
+
+  .scroll-content {
+    //margin: 44px 0 0 !important;
+    padding: 0 !important;
+  }
+
+
+  .dark .namepsal + p { color: #ff4f4f;}
+
+  h3 {
+    display: none;
+  }
+
+  p:first-letter {
+    color: #e50000;
+  }
+
+  .dark p:first-letter { color: #ff4f4f;}
+
+
+  p.buk {
+    text-indent: 0;
+    /*line-height: 32px;*/
+  }
+
+  p.buk:first-letter {
+    font-size: 320%;
+    /*line-height: 64px;*/
+    padding-right: 3px;
+    float: left;
+  }
+
+  .com, .namepsal {
+    color: #e50000;
+    text-indent: 0;
+    /*font-size: 20px;*/
+    text-align: center;
+    margin: 10px 0 2px;
+    font-style: italic;
+  }
+
+  .dark .com, .dark .namepsal { color: #ff4f4f;}
+
+
+  .red {
+    color: #e50000;
+  }
+
+  .dark .red { color: #ff4f4f;}
+
+  .namepsal {
+    font-style: normal;
+  }
+
+  .com a:link, .com a:hover, .com a:active, .com a:visited, .namepsal a:link, .namepsal a:hover, .namepsal a:active, .namepsal a:visited {
+    padding: 0 5px;
+    color: #e50000;
+  }
+  .dark .com a:link,
+  .dark .com a:hover,
+  .dark .com a:active,
+  .dark .com a:visited,
+  .dark .namepsal a:link,
+  .dark .namepsal a:hover,
+  .dark .namepsal a:active,
+  .dark .namepsal a:visited
+  { color: #ff4f4f;}
+
+
+  p.space {
+    height: 10px;
+  }
+
+  i {
+    color: #e50000;
+    font-weight: normal;
+    font-style: normal;
+    /*font-size: 20px;*/
+  }
+  .dark i { color: #ff4f4f;}
+
+
+  .psal, .psal-17 {
+    text-indent: 0;
+  }
+
+  .psal b, .psal-17 b {
+    color: #e50000;
+    /*font-size: 30px;*/
+  }
+  .dark .psal b, .dark .psal-17 b  { color: #ff4f4f;}
+
+
+  .psal i, .psal-17 i, .namepsal i, .com i, .namepsal ~ p i {
+    font-size: 60%;
+    margin-right: 2px;
+    padding-bottom: 5px;
+    vertical-align: top;
+    margin-bottom: 5px;
+  }
+
+  p.ogl, p.ogl a:link, p.ogl a:hover, p.ogl a:active, p.ogl a:visited {
+    text-indent: 0;
+    /*font-size: 18px;*/
+    line-height: 18px;
+    padding: 0 5px;
+  }
+
+  p.ogl b a:link, p.ogl b a:hover, p.ogl b a:active, p.ogl b a:visited {
+    /*font-size: 20px;*/
+    /*line-height: 24px;*/
+  }
+
+  a.red, a.red:link, a.red:active, a.red:hover, a.red:visited {
+    color: #e50000;
+  }
+  .dark a.red,
+  .dark a.red:link,
+  .dark a.red:active,
+  .dark a.red:hover,
+  .dark a.red:visited  { color: #ff4f4f;}
+
+
+
+  p.snoska {
+    text-indent: 0;
+    color: #440500;
+    font-size: 80%;
+    margin: 0 0 20px;
+    padding: 5px 20px;
+    /*line-height: normal;*/
+    border: 1px solid #f2ece1;
+    border-width: 1px 0 0 0;
+  }
+  .dark p.snoska  { color: #ff4f4f;}
+
+
+
+  .hr {
+    color: black;
+    background: black;
+    height: 1px;
+    /*line-height: 1px;*/
+    border: 0;
+  }
+
+  .hyphens {
+    hyphens: auto;
+  }
+
+  .justify {
+    text-align: justify;
+  }
+
+  .noPerenos br {
+    display: none;
+  }
+
+  .not-marked {
+    opacity: 0.5;
+  }
+
+  .bookMode {
+    height: 100%;
+    column-gap: 20px;
+    column-width: 100vw; // !fallback
+    column-width: calc(100vw - 100px);
+    transform: translate3d(0, 0, 0);
+    transition: transform 500ms;
+    margin: 0;
+    will-change: transform;
+    overflow-scrolling: initial;
+  }
+
+  .horizontalScroll {
+    height: 90vh;
+  }
+
+  #contentContainer {
+    padding: 20px 10px 30px;
+    touch-action: auto !important;
+    user-select: auto !important;
+    &.bookMode {
+      touch-action: none;
+      user-select: none;
+    }
+  }
+
+
+  .landscape {
+    .bookMode {
+      column-width: 40vw; //fallback
+      column-width: calc(50vw - 50px);
+    }
+  }
+
+  .pages-info {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.64);
+    color: $basicColor;
+
+    ion-button {
+      color: $basicColor;
+    }
+
+    span {
+      width: 60px;
+      vertical-align: -webkit-baseline-middle;
+    }
+    transform: translate3d(0, 0, 0);
+    transition: transform 300ms;
+
+    &.hidden {
+      transform: translate3d(0, 55px, 0);
+      transition: transform 300ms;
+    }
+  }
+
+  .disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+
+  .notice {
+    text-align: center;
+    font-style: italic;
+    color: #e50000;
+  }
+  .dark .notice { color: #ff4f4f;}
+
+  .ui-btn:hover {
+    background-color: #F6F6F6  !important;
+  }
+
+  .ui-btn:active {
+    background-color: #fff7ea !important;
+  }
+
+  .dark .ui-btn:hover {
+    background-color: #393939 !important;
+  }
+
+  .dark .ui-btn:active {
+    background-color: #444444 !important;
+  }
+
+  .ui-listview > li p {
+    white-space: normal;
+    line-height: normal;
+    font-size: 100%;
+    margin: 3px;
+  }
+
+  .ui-li-static.ui-body-inherit {
+    padding: 3px;
+  }
+
+  h1, h2 {
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+    font-style: italic;
+  }
+
+  .psalm-n {
+    text-align: center;
+    font-style: italic;
+  }
+
+  .emphasis {
+    font-style: italic;
+    font-weight: normal;
+    opacity: 0.7;
+  }
+
+  .b {
+    font-weight: bold;
+  }
+
+  .i {
+    font-style: italic;
+    color: #e50000;
+  }
+
+  .it {
+    font-style: italic;
+  }
+
+  .dark .i { color: #ff4f4f;}
+
+  .info-ps {
+    img {
+      width: 50%;
+      float: left;
+      margin-right: 5px;
+    }
+  }
+
+  .pull-right {
+    float: right;
+  }
+
+  .sreda {
+    width: 100%;
+  }
+
+  .after_page {
+    padding: 0;
+    margin: 0;
+    .row {
+      //min-height: 50vh;
+    }
+  }
+
+  .psalmSn {
+    display: block;
+    color: darkblue;
+    i {
+      color: #413dff;
+    }
+  }
+  .psalms-list {
+    text-align: center;
+    line-height: 150%;
+
+    .psalm-link {
+      font-weight: bold;
+      font-size: 80%;
+      border: 1px solid gray;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin: 2px;
+      text-align: center;
+    }
+  }
+
+  .songs {
+    p {
+      margin: 7px 0;
+    }
+    h3 {
+      color: #e50000;
+      display: block;
+      font-size: 90%;
+    }
+    h4 {
+      text-align: center;
+      font-size: inherit;
+    }
+    p span.n {
+      float: left;
+      color: #e50000;
+      font-size: 80% !important;
+      padding-right: 8px;
+    }
+    .k {
+      color: #e50000;
+      font-style: italic;
+    }
+  }
+}

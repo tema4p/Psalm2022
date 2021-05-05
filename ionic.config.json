@@ -1,5 +1,7 @@
 {
   "name": "Psalm2022",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

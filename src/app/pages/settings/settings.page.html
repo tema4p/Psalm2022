@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="forceRu">Настройки</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Текст:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.textSource">
+        <ion-select-option value="ru">Гражданский</ion-select-option>
+        <ion-select-option value="cs">Церковнославянский</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Параллельный перевод:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.textSource2">
+        <ion-select-option value="0">Нет</ion-select-option>
+        <ion-select-option value="ru">Гражданский</ion-select-option>
+        <ion-select-option value="sn">Синодальный</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="settings.textSource2 !== '0'">
+      <ion-label>Расположение перевода:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.translateOrientation">
+        <ion-select-option value="horizontal">Под строкой</ion-select-option>
+        <ion-select-option value="vertical">В столбик справа</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Размер шрифта:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.fontSize">
+        <ion-select-option value="{{n}}" *ngFor="let n of fontsRange">{{n}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Межстрочный интервал:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.lineHeight">
+        <ion-select-option value="{{n}}" *ngFor="let n of lineHeightRange">{{n/100}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Шрифт:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.fontFamily">
+        <ion-select-option value="{{n}}" *ngFor="let n of fonts">{{n}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Цветовая схема:</ion-label>
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.theme">
+        <ion-select-option value="dark">Ночная</ion-select-option>
+        <ion-select-option value="normal">Обычная</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="!(platform.is('android') && (settings.textSource === 'cs' || settings.textSource2 === 'cs'))">
+      <ion-label>Текст по ширине</ion-label>
+      <ion-checkbox [(ngModel)]="settings.justify"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Переносы в строках</ion-label>
+      <ion-checkbox [(ngModel)]="settings.perenos"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="settings.perenos">
+      <ion-label>Увеличенный интервал между стихами</ion-label>
+      <ion-checkbox [(ngModel)]="settings.extraSpace"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Постраничный режим</ion-label>
+      <ion-checkbox [(ngModel)]="settings.bookMode"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Открывать последнее место чтения при запуске</ion-label>
+      <ion-checkbox [(ngModel)]="settings.lastPlace"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="platform.is('android')">
+      <ion-label>Полноэкранный режим</ion-label>
+      <ion-checkbox [(ngModel)]="settings.fullscreen"></ion-checkbox>
+    </ion-item>
+
+    <!-- Для русского языка -->
+
+    <!--<ion-item *ngIf="settings.textSource === 'ru'">-->
+    <!--<ion-label>Переносы в словах</ion-label>-->
+    <!--<ion-checkbox [(ngModel)]="settings.hyphens"></ion-checkbox>-->
+    <!--</ion-item>-->
+
+    <ion-item *ngIf="settings.textSource === 'ru'">
+      <ion-label>Раскрыть молитвы</ion-label>
+      <ion-checkbox [(ngModel)]="settings.adds"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="settings.textSource === 'ru'">
+      <ion-label>Молитвы за упокой</ion-label>
+      <ion-checkbox [(ngModel)]="settings.repose"></ion-checkbox>
+    </ion-item>
+
+    <ion-item [ngStyle]="{background: settings.customColor}">
+      <ion-label>Выбрать цвет фона</ion-label>
+      <ion-checkbox [(ngModel)]="settings.isCustomColor"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <div class="color-picker" *ngIf="settings.isCustomColor">
+    <color-picker [hexColor]="settings.customColor" (colorChanged)="colorChanged($event)" ></color-picker>
+  </div>
+
+</ion-content>
+

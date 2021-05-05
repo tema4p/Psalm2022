@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="forceRu">Синодальный перевод</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding [ngClass]="[settings.theme]">
+
+  <div id="contentContainer">
+    <div class="psal"
+         [innerHTML]="content | safeHtml"
+         [ngClass]="{'noPerenos':(!settings.perenos),
+                     'hyphens':  (settings.hyphens),
+                     'justify':  (settings.justify),
+                     'bookMode': (settings.bookMode)}"
+
+         [ngStyle]="{'fontFamily': (settings.textSource === 'ru') ? settings.fontFamily : false,
+                   'font-size': settings.fontSize + 'px',
+                   'line-height': settings.lineHeight + '%'}">
+    </div>
+  </div>
+</ion-content>

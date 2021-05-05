@@ -24,3 +24,133 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: Irmologion; /* имя шрифта для CSS правил */
+  src: local("Irmologion"), /* проверяем наличие шрифта в ОС пользователя */
+  url(assets/IrmIEUcs.ttf); /* если шрифт не установлен, тогда загружаем его по указанному пути */
+}
+
+.irmologion {
+  font-family: Irmologion !important;
+  font-weight: 300 !important;
+  text-shadow: none !important;
+}
+.irmologion .hh,.ui-li-count {
+  font-family: Times !important;
+}
+
+.irmologion h1,h2,h3 { font-weight: 400 !important; }
+
+.forceRu {
+  font-family: Times !important;
+}
+
+.irmologion {
+  .toolbar-title {
+    text-overflow: inherit;
+  }
+}
+
+$bg1: #544039;
+$bg2: #231e1a;
+$font1: #f3eae3;
+
+ion-button {
+  &:focus {
+    box-shadow: inset 1px 1px 15px rgba(234, 219, 219, 0.51);
+  }
+}
+
+.dark {
+  .in-toolbar, .bar-button {
+    color: $font1;
+    .toolbar-background, .searchbar-input {
+      background: $bg1;
+    }
+  }
+
+  .content, .item, ion-button[color="light"] {
+    background: $bg2;
+    color: $font1;
+  }
+
+  ion-button {
+    color: #F18F7B;
+  }
+  .item-inner {
+    border-color: #404040 !important;
+  }
+  .pages-info {
+    background-color: rgba(255, 255, 255, 0.1);
+    .button-inner, ion-button {
+      color: $font1;
+    }
+  }
+  .popover-viewport {
+    background-color: $bg2;
+  }
+}
+
+.center {
+  text-align: center;
+  text-indent: 0;
+}
+
+* {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+
+.dark {
+  .psalm-link {
+    color: #c3a993;
+  }
+}
+
+.contentBook {
+  .scroll-content {
+    overflow: hidden;
+    overflow-scrolling: initial;
+  }
+}
+
+.platform-ios .forceScrollBar {
+  #contentContainer {
+    padding: 20px 10px 30px 10px;
+  }
+}
+
+.platform-android .forceScrollBar {
+  #contentContainer {
+    padding: 20px 2px 30px 10px;
+  }
+}
+
+.forceScrollBar {
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  ::-webkit-scrollbar:vertical {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar:horizontal {
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(81, 19, 19, 0.25);
+    border-radius: 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.16);
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+}

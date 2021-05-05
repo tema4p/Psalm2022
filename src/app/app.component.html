@@ -1,3 +1,49 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay" (ionDidOpen)="menuOpened()">
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Оглавление</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list id="inbox-list">
+          <ion-menu-toggle>
+            <ion-item [routerLink]="['/home']">
+              Главная страница
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle *ngFor="let p of pages; let i = index">
+            <ion-item (click)="selectedIndex = i" href
+                      routerDirection="root"
+                      [routerLink]="[p.url]"
+                      *ngIf="p.item[settingsService.settings.textSource]"
+                      [class.selected]="selectedIndex == i">
+              <!--<ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>-->
+              <!--<ion-label>{{ p.title }}</ion-label>-->
+              <span class="title" [ngClass]="{'irmologion': (settingsService.settings.textSource === 'cs'),
+                              'forceRu': !!p.item['forceRu'] && settingsService.settings.textSource === 'cs'}">
+                  {{p.item[settingsService.settings.textSource]}}
+              </span>
+              <div *ngIf="p.note" class="kafisma-pages">{{p.note}}</div>
+
+            </ion-item>
+
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item [routerLink]="['/slovar']">
+              Словарь
+            </ion-item>
+            <ion-item [routerLink]="['/needs']">
+              Псалтирь На Всякую Потребу
+            </ion-item>
+          </ion-menu-toggle>
+
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

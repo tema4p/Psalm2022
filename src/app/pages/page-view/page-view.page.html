@@ -1,0 +1,159 @@
+<ion-header [ngClass]="[settings.theme]">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="nextPsalm || prevPsalm"></ion-back-button>
+      <ion-menu-button *ngIf="!disableNavigation"></ion-menu-button>
+    </ion-buttons>
+    <ion-title [ngClass]="{'irmologion' : (settings.textSource === 'cs' && !forceTitleRu)}">
+      {{title}}
+    </ion-title>
+    <ion-buttons  slot="end">
+      <ion-button (click)="setBookMark()"
+                  [ngClass]="{'not-marked': !isMarked()}"
+                  *ngIf="navParams?.data.item.kafisma">
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/settings']">
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #ionContent
+             [scrollEvents]="true"
+             (ionScrollEnd)="ionScrollEnd($event)"
+        [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
+             [ngClass]="[settings.theme, (isLandscape ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
+
+  <div id="contentContainer"
+       (swipeleft)="goPage(page + 1)"
+       (swiperight)="goPage(page - 1)"
+       [ngClass]="{'irmologion': (settings.textSource === 'cs'),
+                   'noPerenos': (!settings.perenos),
+                   'hyphens':  (settings.hyphens),
+                   'justify':  (settings.justify),
+                   'bookMode': (settings.bookMode)}"
+
+       [ngStyle]="{'fontFamily': (settings.textSource === 'ru') ? settings.fontFamily : undefined,
+                   'font-size': settings.fontSize + 'px',
+                   'transform': 'translate3d(' + getTranslateX() + ', 0, 0)',
+                   'line-height': settings.lineHeight + '%'}">
+
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button fill="outline" size="small" *ngIf="+kafisma > 1"
+                  class="forceRu"
+                  (click)="goKafisma(+kafisma - 1)">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            &nbsp;&nbsp;
+            Кафизма {{+kafisma - 1}}
+          </ion-button>
+        </ion-col>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button fill="outline" size="small" *ngIf="+kafisma < 20"
+                  class="forceRu"
+                  (click)="goKafisma(1 + (1*kafisma))">
+            Кафизма {{1 + (1*kafisma)}}
+            &nbsp;&nbsp;
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <psalm *ngIf="navParams?.data.item?.psalm"
+           [psalmNumber]="navParams?.data.item.psalm"
+           [settings]="settingsService.settings">
+    </psalm>
+
+
+
+    <div *ngIf="kafismaJson" class="psalms-list">
+      Псалмы:
+      <a *ngFor="let psalm of kafismaJson.psalm1" (click)="goToPsalm(psalm)" class="forceRu psalm-link">{{psalm}}</a>&nbsp;
+      <a *ngFor="let psalm of kafismaJson.psalm2" (click)="goToPsalm(psalm)" class="forceRu psalm-link">{{psalm}}</a>&nbsp;
+      <a *ngFor="let psalm of kafismaJson.psalm3" (click)="goToPsalm(psalm)" class="forceRu psalm-link">{{psalm}}</a>
+    </div>
+
+    <kafisma *ngIf="kafisma" [kafismaNumber]="kafisma"
+             [settings]="settingsService.settings">
+    </kafisma>
+
+    <div [innerHTML]="content | safeHtml"></div>
+
+    <ion-grid #afterPage>
+      <ion-row>
+        <ion-col>
+          <ion-button fill="outline" size="small" *ngIf="+kafisma > 1"
+                  class="forceRu"
+                  (click)="goKafisma(+kafisma - 1)">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            &nbsp;&nbsp;
+            Кафизма {{+kafisma - 1}}
+          </ion-button>
+        </ion-col>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button fill="outline" size="small" *ngIf="+kafisma < 20"
+                  class="forceRu"
+                  (click)="goKafisma(1 + (1*kafisma))">
+            Кафизма {{1 + (1*kafisma)}}
+            &nbsp;&nbsp;
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="after_page" *ngIf="!disableNavigation">
+      <ion-row>
+        <ion-col >
+          <ion-button fill="outline" size="small" *ngIf="prevPsalm"
+                  class="forceRu"
+                  (click)="goPsalm(prevPsalm)">
+            <ion-icon name="arrow-back-outline"></ion-icon> &nbsp;&nbsp;
+            Псалом {{prevPsalm}}
+          </ion-button>
+        </ion-col>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button fill="outline" size="small" *ngIf="nextPsalm"
+                  class="forceRu"
+                  (click)="goPsalm(nextPsalm)">
+            Псалом {{nextPsalm}} &nbsp;&nbsp;
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="clear"></div>
+
+
+
+  <div class="pages-info" [ngClass]="{'hidden': (!enableInfo)}" *ngIf="settings.bookMode && pagesTotal > 0">
+    <ion-button fill="outline" size="small"
+            class="forceRu"
+            [ngClass]="{'disabled': (page === 0)}"
+            (click)="goPage(page - 1)">
+      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button fill="clear" size="small">
+      {{page + 1}} / {{pagesTotal}}
+    </ion-button>
+
+    <ion-button fill="outline" size="small"
+            class="forceRu"
+            [ngClass]="{'disabled': (page + 1 === pagesTotal)}"
+            (click)="goPage(page + 1)">
+      <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>
+

@@ -1,0 +1,39 @@
+<div *ngIf="psalm && psalm.id">
+
+<p class="namepsal" psalm [attr.psalmId]="psalm.id"
+   *ngIf="!(psalmPart > 0 && psalm.id == 118)">
+  <span *ngIf="psalm.id != 151">
+    Псалом <span class="forceRu">{{psalm.id}}</span>
+  </span>
+</p>
+
+  <!-- 118 заголовок -->
+<p psalm [attr.psalmId]="psalm.id" *ngIf="!(psalmPart > 0 && psalm.id == 118)">
+  <span *ngIf="psalm.strings[0]" [innerHTML]="psalm.strings[0].v | safeHtml"></span>
+  <span *ngIf="psalm.strings[1] && psalm.strings[1].t" [innerHTML]="psalm.strings[1].v | safeHtml"></span>
+</p>
+
+
+<p class="psal"
+   [ngClass]="{'csTranslated': settings.textSource === 'cs' && settings.textSource2 != 0}">
+  <span *ngFor="let s of strings"
+        [ngClass]="{'extraSpace': settings.extraSpace && settings.perenos,
+          'isTitle': s.t,
+          'line': (settings.translateOrientation !== 'horizontal' && settings.textSource2 !== '0')
+        }">
+    <span *ngIf="!s.t">
+      <i>{{s.i || s.n}}</i><span [innerHTML]="s.v | safeHtml"></span><br/>
+    </span>
+    <span *ngIf="s.v2" class="translate forceRu">
+      <i *ngIf="!s.t">{{s.n2}}</i><span [innerHTML]="s.v2 | safeHtml"></span><br/>
+    </span>
+
+    <div class="sreda" *ngIf="s.s">
+      <span class="sreda-label irmologion" *ngIf="settings.textSource === 'cs'" >[СредA.]</span>
+      <span class="sreda-label" *ngIf="settings.textSource === 'ru'">[Среда:]</span>
+      <span class="sreda-label" *ngIf="settings.textSource === 'sn'">[Середина кафизмы]</span>
+    </div>
+  </span>
+</p>
+
+</div>

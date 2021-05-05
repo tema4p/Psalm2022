@@ -1,0 +1,9 @@
+<div *ngIf="data">
+  <div *ngIf="settings.textSource === 'ru'">
+    <p><p class="red center">По 10–й кафисме:</p>
+    <p class="trisv">Трисвятое по Отче наш:</p>
+  </div>
+
+<div [innerHTML]="data | safeHtml"></div>
+
+</div>

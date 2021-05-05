@@ -1,0 +1,44 @@
+  ion-title {
+    font-family: 'Irmologion';
+  }
+  h5 {
+    text-align: center;
+  }
+  ion-list-header {
+    .label-md {
+      margin: 26px 8px 0 0;
+    }
+  }
+
+  .intro {
+    padding: 5px;
+    ul {
+      padding-left: 20px;
+      li {
+        padding-top: 5px;
+      }
+    }
+  }
+
+.dark .intro {
+  a {
+    color: white;
+  }
+}
+
+.item-flex {
+  display: flex;
+  flex: auto;
+  align-items: center;
+
+  .title {
+    flex: 1 1;
+  }
+  .read-date {
+    flex: 0 0;
+    text-align: right;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+}
+
