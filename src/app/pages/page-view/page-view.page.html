@@ -1,4 +1,4 @@
-<ion-header [ngClass]="[settings.theme]">
+<ion-header #ionHeader [ngClass]="[settings.theme]">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button *ngIf="nextPsalm || prevPsalm"></ion-back-button>
@@ -22,11 +22,14 @@
 
 <ion-content #ionContent
              [scrollEvents]="true"
+             (ionScroll)="ionScroll($event)"
              (ionScrollEnd)="ionScrollEnd($event)"
         [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
              [ngClass]="[settings.theme, (isLandscape ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
+  <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
   <div id="contentContainer"
+       #contentContainer
        (swipeleft)="goPage(page + 1)"
        (swiperight)="goPage(page - 1)"
        [ngClass]="{'irmologion': (settings.textSource === 'cs'),
@@ -155,5 +158,7 @@
       <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
     </ion-button>
   </div>
+  <div class="scroll-end" #scrollEnd></div>
+
 </ion-content>
 

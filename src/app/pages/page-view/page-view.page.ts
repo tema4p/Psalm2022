@@ -27,6 +27,9 @@ import {ActivatedRoute, Route, Router} from '@angular/router';
 export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('afterPage', {static: false}) afterPage: ElementRef | any;
   @ViewChild('ionContent', {static: false}) ionContent: ElementRef | any;
+  @ViewChild('ionHeader', {static: false}) ionHeader: ElementRef | any;
+  @ViewChild('scrollEnd', {static: false}) scrollEnd: ElementRef | any;
+  @ViewChild('contentContainer', {static: false}) contentContainer: ElementRef | any;
 
   public content = '';
   public title = '';
@@ -49,6 +52,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public psalmJson: any;
   public scrollTimeout: any;
   public forceTitleRu = false;
+
+  public scrollBoxStyle: any;
 
   public data: any = {
     adds: {
@@ -126,11 +131,29 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ionScrollEnd(e) {
-    console.log('e', e);
+    // clearTimeout(this.scrollTimeout);
+    // const height = $(this.contentContainer.nativeElement)[0].clientHeight;
+    // const position = e.target.offsetTop;
+    // console.log('e', e);
+    // this.scrollTimeout = setTimeout(() => {
+    //   this.addHistory(position, height);
+    // }, 1000);
+  }
+
+  ionScroll(e) {
+    const height = $(this.contentContainer.nativeElement)[0].clientHeight;
+    const position = e.detail.scrollTop;
+    const ionContentHeight = $(this.ionContent.el).height();
+    const scrollBoxHeight = (ionContentHeight  / height) * ionContentHeight;
+    const percent = (position ) / (height - ionContentHeight);
+    const value = (1 - percent) * (ionContentHeight - scrollBoxHeight);
+    this.scrollBoxStyle = {
+      bottom: `${value}px`,
+      height: `${scrollBoxHeight}px`
+    };
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout(() => {
-      console.log('scrollTop', $(e.target) );
-      this.addHistory(e.target.scrollTop, $(e.target)[0].scrollHeight);
+      this.addHistory(position, height);
     }, 1000);
   }
 

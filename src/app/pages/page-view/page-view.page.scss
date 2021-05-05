@@ -4,6 +4,20 @@
   hyphens: auto;
 }
 
+.scroll-box {
+  position: fixed;
+  right: 2px;
+  height: 20px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: rgba(80, 17, 17, 0.5)
+}
+.contentBook {
+  .scroll-box {
+    display: none;
+  }
+}
+
 ::ng-deep {
   .namepsal + p, .isTitle {
     color: #E50000;
@@ -377,4 +391,8 @@
       font-style: italic;
     }
   }
+}
+
+.scroll-end {
+  bottom: 0;
 }
