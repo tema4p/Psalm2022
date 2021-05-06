@@ -45,7 +45,7 @@ export class HomePage {
     this.loadHistory();
     if (this.settingsService.settings.lastPlace && !(window as any).justOpened && this.history[0]) {
       (window as any).justOpened = true;
-      this.openPage(this.history[0]);
+      this.openHistoryPage(this.history[0]);
     }
   }
 
@@ -101,8 +101,12 @@ export class HomePage {
     console.log('loadPsalms', this.psalms);
   }
 
-  openPage(page: any): void {
-    // this.router.navigateByUrl('/page/kafisma' + page.item.kafisma);
+  openHistoryPage(history: any): void {
+    this.router.navigate(['/page/kafisma' + history.item.kafisma], {
+      queryParams: {
+        history: JSON.stringify(history)
+      }
+    });
   }
 
   openPsalm(page: any): void {

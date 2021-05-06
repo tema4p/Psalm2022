@@ -109,7 +109,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.calculatePagesTotal();
       this.chRef.detectChanges();
-      this.resetScrollPosition();
     }, 400);
   }
 
@@ -117,27 +116,13 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     this.registerNativeButtons();
   }
 
-  resetScrollPosition() {
-    console.log('+= load progress', this.navParams.data.progress);
+  resetScrollPosition(progress: number) {
     if (!this.settings.bookMode) {
-      console.log('this.viewElement', this.viewElement);
-      const $s = $(this.ionContent.el);
-      console.log('$s', $s);
-      const curHeight: number = $(this.ionContent.el)[0].scrollHeight;
-      this.scrollTo(curHeight * this.navParams.data.progress);
+      const height = $(this.contentContainer.nativeElement)[0].clientHeight;
+      this.scrollTo(height * progress);
     } else if (this.navParams.data.progress > 0 && this.navParams.data.page === 0) {
       this.goPage(+(this.pagesTotal * this.navParams.data.progress));
     }
-  }
-
-  ionScrollEnd(e) {
-    // clearTimeout(this.scrollTimeout);
-    // const height = $(this.contentContainer.nativeElement)[0].clientHeight;
-    // const position = e.target.offsetTop;
-    // console.log('e', e);
-    // this.scrollTimeout = setTimeout(() => {
-    //   this.addHistory(position, height);
-    // }, 1000);
   }
 
   ionScroll(e) {
@@ -211,11 +196,24 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       console.log('params', params); // {order: "popular"}
       this.disableNavigation = params.disableNavigation || false;
-      this.navParams = {
-        data: {
-          item: params
-        }
-      };
+      if (params.history) {
+        const history = JSON.parse(params.history);
+        this.navParams = {
+          data: {
+            item: history.item
+          }
+        };
+        setTimeout(() => {
+          this.resetScrollPosition(history.progress)
+        }, 1000)
+
+      } else {
+        this.navParams = {
+          data: {
+            item: params
+          }
+        };
+      }
     });
 
     this.route.params.subscribe(params => {

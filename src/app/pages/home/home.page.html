@@ -21,7 +21,8 @@
     </ion-item>
     <ng-container *ngFor="let p of history; trackBy: index" >
       <ion-item (*ngIf)="p && p.item.ru"
-              [routerLink]="'/page/kafisma' + p.item.kafisma">
+                (click)="openHistoryPage(p)"
+                routerLink>
         <div class="item-flex">
           <span class="title" [ngClass]="{'irmologion' : (settingsService.settings.textSource === 'cs')}">
           {{p.item[settingsService.settings.textSource]}}
@@ -39,7 +40,7 @@
     </ion-item>
     <ng-container *ngFor="let p of bookmarks; trackBy: index" >
       <ion-item-sliding (*ngIf)="p && p.item.ru">
-        <ion-item (click)="openPage(p)">
+        <ion-item routerLink (click)="openHistoryPage(p)">
           <span [ngClass]="{'irmologion' : (settingsService.settings.textSource === 'cs')}">
             {{p.item[settingsService.settings.textSource]}}
           </span>
@@ -61,7 +62,7 @@
     </ion-item>
     <ng-container *ngFor="let p of psalms; trackBy: index" >
       <ion-item-sliding (*ngIf)="p && p.item.ru">
-        <ion-item (click)="openPsalm(p)">
+        <ion-item routerLink (click)="openPsalm(p)">
           {{p.item[settingsService.settings.textSource]}}
         </ion-item>
         <ion-item-options>

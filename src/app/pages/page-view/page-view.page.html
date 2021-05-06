@@ -23,8 +23,7 @@
 <ion-content #ionContent
              [scrollEvents]="true"
              (ionScroll)="ionScroll($event)"
-             (ionScrollEnd)="ionScrollEnd($event)"
-        [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
+             [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
              [ngClass]="[settings.theme, (isLandscape ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
   <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
