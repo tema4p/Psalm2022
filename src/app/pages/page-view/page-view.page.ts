@@ -120,8 +120,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     if (!this.settings.bookMode) {
       const height = $(this.contentContainer.nativeElement)[0].clientHeight;
       this.scrollTo(height * progress);
-    } else if (this.navParams.data.progress > 0 && this.navParams.data.page === 0) {
-      this.goPage(+(this.pagesTotal * this.navParams.data.progress));
+    } else {
+      this.goPage(+(Math.floor(this.pagesTotal * progress)));
     }
   }
 
