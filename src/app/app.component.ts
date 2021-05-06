@@ -76,8 +76,7 @@ export class AppComponent implements OnInit {
     private toastCtrl: ToastController,
     private menu: MenuController
   ) {
-    this.initializeApp();
-    this.menuOpened();
+
   }
 
   menuOpened() {
@@ -135,10 +134,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
+      this.initializeApp();
+      this.menuOpened();
   }
 
   async showToast() {
@@ -150,10 +147,6 @@ export class AppComponent implements OnInit {
 
     toast.present();
   }
-
-  // openPage(page: any): void {
-  //   // this.nav.setRoot(page.component, page);
-  // }
 
   openHome(): void {
     this.router.navigate(['/home']);

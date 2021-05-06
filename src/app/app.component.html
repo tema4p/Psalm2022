@@ -10,12 +10,12 @@
 
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
             <ion-item [routerLink]="['/home']">
               Главная страница
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle *ngFor="let p of pages; let i = index">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of pages; let i = index">
             <ion-item (click)="selectedIndex = i" href
                       routerDirection="root"
                       [routerLink]="[p.url]"
@@ -32,7 +32,7 @@
             </ion-item>
 
           </ion-menu-toggle>
-          <ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
             <ion-item [routerLink]="['/slovar']">
               Словарь
             </ion-item>
