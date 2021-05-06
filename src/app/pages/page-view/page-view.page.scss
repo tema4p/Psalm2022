@@ -244,12 +244,13 @@
       width: 60px;
       vertical-align: -webkit-baseline-middle;
     }
-    transform: translate3d(0, 0, 0);
-    transition: transform 300ms;
+    transition: opacity 300ms;
 
     &.hidden {
-      transform: translate3d(0, 55px, 0);
-      transition: transform 300ms;
+      opacity: 0.1;
+    }
+    &:hover {
+      opacity: 1;
     }
   }
 

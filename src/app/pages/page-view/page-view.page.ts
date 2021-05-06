@@ -425,7 +425,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   public getTranslateX(): string {
     const vw: number = 100 * this.page;
-    return `-${vw}vw`;
+    return `-${vw}%`;
   }
 
   public goPage(n): void {
