@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'sinod',
     loadChildren: () => import('./pages/sinod/sinod.module').then( m => m.SinodPageModule)
+  },
+  {
+    path: 'test',
+    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   }
 ];
 

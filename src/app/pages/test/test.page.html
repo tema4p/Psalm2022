@@ -1,0 +1,29 @@
+<ion-content>
+  <div>
+    <table *ngFor="let p of psalms">
+      <tr *ngIf="p?.cs">
+        <td></td>
+        <td></td>
+        <td><b>Псалом {{p?.cs?.id}}</b></td>
+      </tr>
+      <tr *ngFor="let s of p?.cs?.strings; let i = index" >
+        <td width="20" class="num" >{{s.n}}</td>
+        <td width="20" class="num irmologion">{{s.i}}</td>
+
+        <td width="30%" class="irmologion"
+            [class.isTitle]="s.t"
+            [innerHTML]="s.v | safeHtml">
+        </td>
+
+        <td width="30%"
+            [class.isTitle]="p?.ru?.strings[i]?.t"
+            [innerHTML]="p?.ru?.strings[i]?.v | safeHtml">
+        </td>
+
+        <td [class.isTitle]="p?.sn?.strings[i]?.t"
+            [innerHTML]="p?.sn?.strings[i]?.v | safeHtml">
+        </td>
+      </tr>
+    </table>
+  </div>
+</ion-content>

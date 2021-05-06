@@ -1,0 +1,19 @@
+
+table {
+  tr {
+    &:hover {
+      background-color: #f3f2ff;
+    }
+  }
+  td {
+    border: 1px solid gray;
+    padding: 4px;
+  }
+  .num {
+    text-align: center;
+    width: 20px;
+  }
+  .isTitle {
+    color: darkred;
+  }
+}
