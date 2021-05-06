@@ -75,6 +75,13 @@
   .dark .red { color: #ff4f4f;}
 
   .namepsal {
+    cursor: pointer;
+    >span {
+      border-bottom: 1px dotted;
+    }
+  }
+
+  .namepsal {
     font-style: normal;
   }
 
@@ -357,6 +364,7 @@
     line-height: 150%;
 
     .psalm-link {
+      cursor: pointer;
       font-weight: bold;
       font-size: 80%;
       border: 1px solid gray;
