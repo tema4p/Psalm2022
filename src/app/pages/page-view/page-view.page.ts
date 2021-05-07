@@ -37,7 +37,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public settings: any = {};
   public page = 0;
   public pagesTotal = 0;
-  public isLandscape = (window as any).screen.orientation.type.indexOf('landscape') > -1;
+
+
   public enableInfo = true;
   public hideInfoTimeOut: any;
   public container: any;
@@ -115,6 +116,10 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   ionViewDidEnter() {
     this.registerNativeButtons();
   }
+
+  public isLandscape() {
+    return (window as any).screen.orientation.type.indexOf('landscape') > -1;
+  };
 
   resetScrollPosition(progress: number) {
     if (!this.settings.bookMode) {
@@ -280,10 +285,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     this.rotationHandler = (() => {
       // console.log('view orientationchange');
       const progress: number  = this.page / this.pagesTotal;
-      // console.log('this.page', this.page);
-      // console.log('this.pagesTotal', this.pagesTotal);
-      // console.log('progress', progress);
-      this.isLandscape = (window as any).screen.orientation.type.indexOf('landscape') > -1;
       setTimeout(() => {
         this.calculatePagesTotal();
         this.goPage(Math.round(this.pagesTotal * progress));
@@ -472,9 +473,12 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     }
     this.page = this.page || 0;
     // let pages = this.container.scrollWidth / window.screen.availWidth;
+    const menuOffset = document.documentElement.scrollWidth - $(this.ionContent.el).width();
+
     let pages: number;
     const $afterPage: any = this.afterPage.el;
-    if (this.isLandscape) {
+
+    if (this.isLandscape() && menuOffset === 0) {
       pages = (+$afterPage.offsetLeft - 10) / (+$afterPage.offsetWidth + 10) / 2;
     } else {
       pages = (+$afterPage.offsetLeft - 10) / (+$afterPage.offsetWidth + 10);

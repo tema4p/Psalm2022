@@ -24,7 +24,7 @@
              [scrollEvents]="true"
              (ionScroll)="ionScroll($event)"
              [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
-             [ngClass]="[settings.theme, (isLandscape ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
+             [ngClass]="[settings.theme, (isLandscape() ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
   <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
   <div id="contentContainer"
