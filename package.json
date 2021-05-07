@@ -38,6 +38,7 @@
     "moment": "^2.24.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "web": "0.0.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
