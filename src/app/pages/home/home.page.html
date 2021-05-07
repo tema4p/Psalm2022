@@ -17,7 +17,7 @@
   <ion-list>
     <ion-list-header>Последние кафизмы</ion-list-header>
     <ion-item *ngIf="history.length === 0">
-      У вас еще нет открытых кафизм
+      У вас еще нет истории чтения, выберите кафизму из меню   <ion-icon name="menu"></ion-icon>
     </ion-item>
     <ng-container *ngFor="let p of history; trackBy: index" >
       <ion-item (*ngIf)="p && p.item.ru"
@@ -36,7 +36,7 @@
   <ion-list>
     <ion-list-header>Закладки</ion-list-header>
     <ion-item *ngIf="bookmarks.length === 0">
-      У вас пока нет закладок
+      У вас пока нет закладок, вы можете добавить кафизму нажав <ion-icon name="bookmark-outline"></ion-icon> в верхней части окна с открытой кафизмой
     </ion-item>
     <ng-container *ngFor="let p of bookmarks; trackBy: index" >
       <ion-item-sliding (*ngIf)="p && p.item.ru">
@@ -58,7 +58,7 @@
   <ion-list>
     <ion-list-header>Избранные псалмы</ion-list-header>
     <ion-item *ngIf="psalms.length === 0">
-      У вас еще нет избранных псалмов
+      У вас еще нет избранных псалмов, вы можете добавить псалом в избранное нажав на его заголовок с номером
     </ion-item>
     <ng-container *ngFor="let p of psalms; trackBy: index" >
       <ion-item-sliding (*ngIf)="p && p.item.ru">
@@ -75,18 +75,8 @@
   </ion-list>
 
   <div class="intro" *ngIf="isIntroHidden !== 'true'">
-    <div class="desc">В случае ошибок, неточностей или иных проблем сообщите автору:
-      <div class="center">
-        <ion-button icon-start small outline class="button" href="mailto:psalm@it4p.ru">
-          <ion-icon name="mail"></ion-icon> &nbsp;
-          psalm@it4p.ru
-        </ion-button>
-      </div>
-      Так же будем рады любым предложеням по работе приложения.
-    </div>
-
+    <div class="header">Псалтирь на церковнославянском языке в обычном и современном начертании.</div>
     <ul>
-      <li>Псалтирь на церковнославянском языке в обычном и современном начертании.</li>
       <li>Cинодальный перевод псалмов (параллельный и отдельный).</li>
       <li>Обычные молитвы или за упокой на "Славах"</li>
       <li>Молитвы "Перед чтением Псалтири", "По окончании", "Шестопсалмие", "Чин чтения 12-ти псалмов", "Помянник" и "Поcледование по исходе души от тела"</li>
@@ -95,11 +85,38 @@
       <li>Настройки: размер шрифта, интервалы, переносы, гарнитура шрифта.</li>
       <li>Закладки, история чтения, избранные псалмы.</li>
     </ul>
+    <div class="header">Веб версия доступна по ссылке ниже:</div>
+    <div class="center">
+      <ion-button icon-start small outline class="button" target="_blank" href="http://psalm.it4p.ru/">
+        <ion-icon name="link-outline"></ion-icon> &nbsp;
+        http://psalm.it4p.ru/
+      </ion-button>
+    </div>
+    <div class="desc">В случае ошибок, неточностей или иных проблем сообщите автору c указанием текста
+      (цс, цс с русскими буквами, синодальный перевод) а так же точного места (Пс 90:17)
+      <div class="center">
+        <ion-button icon-start small outline class="button" href="mailto:psalm@it4p.ru">
+          <ion-icon name="mail"></ion-icon> &nbsp;
+          psalm@it4p.ru
+        </ion-button>
+      </div>
+      Сверка текстов так же доступна из настроек в мобильном приложении или по ссылке:
+      <a target="_blank" href="http://psalm.it4p.ru/test">http://psalm.it4p.ru/test</a>
+      <br>Так же будем рады любым предложеням по работе приложения.
+    </div>
+    <div class="desc">
+      <br>Выражаем ОГРОМНУЮ благодраность всем кто писал отчеты по ошибкам и исправлениям, все письма были прочитаны и многое исправленно, что-то запланированно к работе.
+      <br>Проекту нужны активные разработчики и тестировщики.
+      <br>Если вы хотите принять участие в развитии проекта и/или научиться технологиям разработки
+      подобных приложений то можете написать автору проекта
+    </div>
+
     <div class="center">
       <ion-button (click)="hideIntro()" fill="outline" size="small">
         Скрыть информацию
       </ion-button>
     </div>
+
   </div>
   <div class="center">
     <ion-button (click)="showIntro()" *ngIf="isIntroHidden === 'true'"  fill="outline" size="small">
