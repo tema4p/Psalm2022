@@ -23,7 +23,7 @@ export class ColorPickerComponent implements OnInit {
 
   // this is the main palette
   @ViewChild('palette', {static: false}) palette: ElementRef;
-  @ViewChild('chooser', {static: false}) chooser: ElementRef;
+  @ViewChild('chooser', {static: true}) chooser: ElementRef;
 
   ctxPalette: CanvasRenderingContext2D;
 
@@ -141,6 +141,7 @@ export class ColorPickerComponent implements OnInit {
   }
 
   initChooser() {
+    console.log('this.chooser', this.chooser);
     const canvasChooser = this.chooser.nativeElement;
     const ctx = canvasChooser.getContext('2d');
 

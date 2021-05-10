@@ -18,6 +18,7 @@ import kafismaRuJson from 'src/app/data/kafisma-ru-json';
 import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popover.component';
 import {Contents} from '../../../content/contents';
 import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ISettings} from '../../../models/ISettings';
 
 @Component({
   selector: 'app-page-view',
@@ -34,11 +35,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public content = '';
   public title = '';
   public titleForceRu = false;
-  public settings: any = {};
+  public settings: ISettings;
   public page = 0;
   public pagesTotal = 0;
-
-
   public enableInfo = true;
   public hideInfoTimeOut: any;
   public container: any;
@@ -118,7 +117,11 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public isLandscape() {
-    return (window as any).screen.orientation.type.indexOf('landscape') > -1;
+    if ((window as any).screen.orientation) {
+      return (window as any).screen.orientation.type.indexOf('landscape') > -1;
+    } else {
+      return 1;
+    }
   };
 
   resetScrollPosition(progress: number) {
@@ -195,7 +198,10 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    (screen as any).orientation.unlock();
+    if ((screen as any).orientation) {
+      (screen as any).orientation.unlock();
+    }
+
     console.log('this.route', this.route);
 
     this.route.queryParams.subscribe(params => {
@@ -253,7 +259,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     console.log('ngOnDestroy');
     window.removeEventListener('orientationchange', this.rotationHandler);
-    (screen as any).orientation.removeEventListener('change', this.rotationHandler);
+    if ((screen as any).orientation) {
+      (screen as any).orientation.removeEventListener('change', this.rotationHandler);
+    }
 
     if (this.hideInfoTimeOut) {
       clearTimeout(this.hideInfoTimeOut);
@@ -292,7 +300,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       }, 400);
     });
     window.addEventListener('orientationchange', this.rotationHandler, false);
-    (screen as any).orientation.addEventListener('change', this.rotationHandler);
+    if ((screen as any).orientation) {
+      (screen as any).orientation.addEventListener('change', this.rotationHandler);
+    }
   }
 
   loadContent() {
@@ -533,6 +543,16 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       const page = Math.floor($target.offsetLeft / ($target.offsetWidth + 10));
 
       this.goPage(page);
+    }
+  }
+
+  getBgColor() {
+    if (this.settings.isCustomColor) {
+      if (this.settings.theme === 'normal') {
+        return this.settings.customColorBg;
+      } else {
+        return this.settings.customColorDarkBg;
+      }
     }
   }
 }

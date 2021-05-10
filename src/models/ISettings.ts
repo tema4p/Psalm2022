@@ -9,6 +9,11 @@ export interface ISettings {
   theme: string;
   isCustomColor: boolean;
   customColor: string;
+  customColorSecond: string;
+  customColorBg: string;
+  customColorDark: string;
+  customColorDarkSecond: string;
+  customColorDarkBg: string;
   perenos: boolean;
   extraSpace: boolean;
   hyphens: boolean;

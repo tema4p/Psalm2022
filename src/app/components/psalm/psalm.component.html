@@ -22,17 +22,27 @@
           'line': (settings.translateOrientation !== 'horizontal' && settings.textSource2 !== '0')
         }">
     <span *ngIf="!s.t">
-      <i>{{s.i || s.n}}</i><span [innerHTML]="s.v | safeHtml"></span><br/>
+      <i>{{s.i || s.n}}</i>
+      <span [innerHTML]="s.v | safeHtml"
+            [style.color]="getFontColor()">
+      </span>
+      <br/>
     </span>
     <span *ngIf="s.v2" class="translate forceRu">
-      <i *ngIf="!s.t">{{s.n2}}</i><span [innerHTML]="s.v2 | safeHtml"></span><br/>
+      <i *ngIf="!s.t">{{s.n2}}</i>
+      <span [innerHTML]="s.v2 | safeHtml"
+            [style.color]="getFontSecondColor()">
+      </span>
+      <br/>
     </span>
 
-    <div class="sreda" *ngIf="s.s">
+    <span class="sreda" *ngIf="s.s">
+      <br>
       <span class="sreda-label irmologion" *ngIf="settings.textSource === 'cs'" >[СредA.]</span>
       <span class="sreda-label" *ngIf="settings.textSource === 'ru'">[Среда:]</span>
       <span class="sreda-label" *ngIf="settings.textSource === 'sn'">[Середина кафизмы]</span>
-    </div>
+      <br>
+    </span>
   </span>
 </p>
 

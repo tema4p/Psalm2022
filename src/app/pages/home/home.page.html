@@ -15,9 +15,13 @@
 <ion-content class="outer-content">
   <h5>Псалтирь царя и пророка Давида</h5>
   <ion-list>
-    <ion-list-header>Последние кафизмы</ion-list-header>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="menu"></ion-icon>
+      Последние кафизмы
+    </ion-item>
     <ion-item *ngIf="history.length === 0">
-      У вас еще нет истории чтения, выберите кафизму из меню   <ion-icon name="menu"></ion-icon>
+      У вас еще нет истории чтения, выберите кафизму из меню
     </ion-item>
     <ng-container *ngFor="let p of history; trackBy: index" >
       <ion-item (*ngIf)="p && p.item.ru"
@@ -34,9 +38,12 @@
   </ion-list>
 
   <ion-list>
-    <ion-list-header>Закладки</ion-list-header>
+    <ion-item lines="none">
+      <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+      Закладки
+    </ion-item>
     <ion-item *ngIf="bookmarks.length === 0">
-      У вас пока нет закладок, вы можете добавить кафизму нажав <ion-icon name="bookmark-outline"></ion-icon> в верхней части окна с открытой кафизмой
+      У вас пока нет закладок, вы можете добавить кафизму нажав на соответствущую иконку в верхней части окна с открытой кафизмой
     </ion-item>
     <ng-container *ngFor="let p of bookmarks; trackBy: index" >
       <ion-item-sliding (*ngIf)="p && p.item.ru">
@@ -56,7 +63,10 @@
   </ion-list>
 
   <ion-list>
-    <ion-list-header>Избранные псалмы</ion-list-header>
+    <ion-item lines="none">
+      <ion-icon slot="start" name="star"></ion-icon>
+      Избранные псалмы
+    </ion-item>
     <ion-item *ngIf="psalms.length === 0">
       У вас еще нет избранных псалмов, вы можете добавить псалом в избранное нажав на его заголовок с номером
     </ion-item>

@@ -23,7 +23,6 @@
 <ion-content #ionContent
              [scrollEvents]="true"
              (ionScroll)="ionScroll($event)"
-             [ngStyle]="{background: settings.isCustomColor ? settings.customColor : ''}"
              [ngClass]="[settings.theme, (isLandscape() ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
   <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
@@ -31,6 +30,7 @@
        #contentContainer
        (swipeleft)="goPage(page + 1)"
        (swiperight)="goPage(page - 1)"
+       [style.background]="getBgColor()"
        [ngClass]="{'irmologion': (settings.textSource === 'cs'),
                    'noPerenos': (!settings.perenos),
                    'hyphens':  (settings.hyphens),

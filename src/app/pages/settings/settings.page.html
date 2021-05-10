@@ -112,14 +112,38 @@
     </ion-item>
 
     <ion-item [ngStyle]="{background: settings.customColor}">
-      <ion-label>Выбрать цвет фона</ion-label>
+      <ion-label>Выбрать цвета текста и фона</ion-label>
       <ion-checkbox [(ngModel)]="settings.isCustomColor"></ion-checkbox>
     </ion-item>
   </ion-list>
 
-  <div class="color-picker" *ngIf="settings.isCustomColor">
-    <color-picker [hexColor]="settings.customColor" (colorChanged)="colorChanged($event)" ></color-picker>
-  </div>
+  <ion-list *ngIf="settings.isCustomColor">
+    <ion-item>
+      <ion-label>Цвет текста для светлой темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColor">
+    </ion-item>
+    <ion-item>
+      <ion-label>Цвет второго текста для светлой темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColorSecond">
+    </ion-item>
+    <ion-item>
+      <ion-label>Цвет Фона для светлой темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColorBg">
+    </ion-item>
+    <ion-item>
+      <ion-label>Цвет текста для ночной темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColorDark">
+    </ion-item>
+    <ion-item>
+      <ion-label>Цвет второго текста для ночной темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColorDarkSecond">
+    </ion-item>
+    <ion-item>
+      <ion-label>Цвет Фона для ночной темы</ion-label>
+      <input type="color" [(ngModel)]="settings.customColorDarkBg">
+    </ion-item>
+  </ion-list>
+
 
   <div>
     <ion-button [routerLink]="['/test']">Тестовая страница для сверки текстов</ion-button>
