@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {StatusBar} from '@ionic-native/status-bar';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Platform} from '@ionic/angular';
-import {AndroidFullScreen} from '@ionic-native/android-full-screen/ngx';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 import {Observable, Subject} from 'rxjs';
 import {ISettings} from '../../models/ISettings';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const NavigationBar;
 
 const psalmsRange = {
   1:  '1-8',
@@ -66,11 +67,10 @@ export class SettingsService {
   };
 
   constructor(
-    // public statusBar: StatusBar,
-    private androidFullScreen: AndroidFullScreen,
+    public statusBar: StatusBar,
+    // private androidFullScreen: AndroidFullScreen,
     public platform: Platform
   ) {
-
     this.loadSettings();
     console.log('SettingsService init');
     this.updateTheme();
@@ -104,7 +104,7 @@ export class SettingsService {
     this.$settings.next(this.settings);
   }
 
-  getSettings(): any {
+  getSettings(): ISettings {
     this.loadSettings();
     this.fixAndroidCsJustify();
     if (this.settings.textSource === 'cs') {
@@ -124,14 +124,15 @@ export class SettingsService {
   }
 
   updateStatusBar(): void {
+    if (typeof NavigationBar === 'undefined') {
+      return;
+    }
     if (this.settings.fullscreen) {
-      this.androidFullScreen.isImmersiveModeSupported()
-        .then(() => this.androidFullScreen.immersiveMode())
-        .catch((error: any) => console.log(error));
+      this.statusBar.hide();
+      NavigationBar.hide();
     } else {
-      this.androidFullScreen.isImmersiveModeSupported()
-        .then(() => this.androidFullScreen.showSystemUI())
-        .catch((error: any) => console.log(error));
+      this.statusBar.show();
+      NavigationBar.show();
     }
   }
 
