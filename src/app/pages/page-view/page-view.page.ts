@@ -179,11 +179,11 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   initContent() {
     const newSettings = this.settingsService.getSettings();
-
     if (this.content === '' ||
       this.settings.textSource !== newSettings.textSource ||
       this.settings.adds !== newSettings.adds ||
-      this.settings.repose !== newSettings.repose) {
+      this.settings.repose !== newSettings.repose
+    ) {
       this.settings = newSettings;
       this.loadContent();
     } else {

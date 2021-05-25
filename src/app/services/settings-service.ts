@@ -68,7 +68,6 @@ export class SettingsService {
 
   constructor(
     public statusBar: StatusBar,
-    // private androidFullScreen: AndroidFullScreen,
     public platform: Platform
   ) {
     this.loadSettings();
@@ -81,7 +80,7 @@ export class SettingsService {
     return this.$settings;
   }
 
-  saveSettings(settings: any): any {
+  saveSettings(settings: ISettings) {
     _.extend(this.settings, settings);
     this.$settings.next(this.settings);
 
@@ -105,7 +104,6 @@ export class SettingsService {
   }
 
   getSettings(): ISettings {
-    this.loadSettings();
     this.fixAndroidCsJustify();
     if (this.settings.textSource === 'cs') {
       this.settings.repose = false;

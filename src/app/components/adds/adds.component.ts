@@ -1,6 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import addsRu from '../../data/adds-ru';
 import addsCs from '../../data/adds-cs';
+import {SettingsService} from '../../services/settings-service';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {ISettings} from '../../../models/ISettings';
 
 @Component({
   selector: 'adds',
@@ -10,15 +13,21 @@ import addsCs from '../../data/adds-cs';
 
 export class AddsComponent implements OnInit, OnChanges {
   @Input() addsId: string;
-  @Input() settings: any;
-  data: string;
+  public data: string;
+  public settings: ISettings = this.settingsService.getSettings();
 
-  constructor() {}
-  ngOnInit() {}
+  constructor(
+    private settingsService: SettingsService
+  ) {}
+  ngOnInit() {
+    this.settingsService.getSettingsSubj().subscribe((settings) => {
+      this.settings = settings;
+      this.ngOnChanges();
+    });
+  }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     let source: any;
-
     if (this.addsId) {
       let add: string = this.addsId;
       if (this.settings.textSource === 'ru') {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SettingsService} from '../services/settings-service';
 import {RateService} from '../services/rate-service';
@@ -9,7 +9,6 @@ import {KafismaComponent} from '../components/kafisma/kafisma.component';
 import {PsalmComponent} from '../components/psalm/psalm.component';
 import {PsalmPopoverComponent} from '../components/psalm-popover/psalm-popover.component';
 import {SafeHtmlPipe} from '../pipes/safe-html.pipe';
-import {AndroidFullScreen} from '@ionic-native/android-full-screen/ngx';
 import {IonicModule} from '@ionic/angular';
 
 
@@ -37,9 +36,7 @@ import {IonicModule} from '@ionic/angular';
     SafeHtmlPipe
   ],
   providers: [
-    SettingsService,
-    RateService,
-    AndroidFullScreen
+
   ],
   entryComponents: [
     AddsComponent,
@@ -50,4 +47,14 @@ import {IonicModule} from '@ionic/angular';
     PsalmPopoverComponent,
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+  static forRoot(): ModuleWithProviders<SharedModule> {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        SettingsService,
+        RateService
+      ]
+    };
+  }
+}

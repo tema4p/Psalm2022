@@ -15,7 +15,7 @@ import {ISettings} from '../../../models/ISettings';
 export class PsalmComponent implements OnChanges {
   @Input() psalmNumber: number;
   @Input() psalmPart: number;
-  @Input() settings: ISettings;
+  public settings: ISettings = this.settingsService.getSettings();
 
   strings: any[];
   strings2: any[];
@@ -35,7 +35,6 @@ export class PsalmComponent implements OnChanges {
     }
     let source;
     let source2;
-
     if (this.settings.textSource === 'ru') {
       source = (new psalmRuJson()).data;
     } else if (this.settings.textSource === 'cs') {

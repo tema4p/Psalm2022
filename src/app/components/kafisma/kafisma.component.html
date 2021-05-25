@@ -5,59 +5,48 @@
   <!-- Psalms 1-->
   <psalm [psalmNumber]="psalm"
          [psalmPart]="0"
-         *ngFor="let psalm of kafisma.psalm1"
-         [settings]="settings">
+         *ngFor="let psalm of kafisma.psalm1">
   </psalm>
 
   <!-- Slava 1-->
   <adds *ngIf="!settings.repose"
-        [addsId]="'slava'"
-        [settings]="settings"></adds>
+        [addsId]="'slava'"></adds>
   <adds *ngIf="settings.repose"
-        [addsId]="'repose'"
-        [settings]="settings"></adds>
+        [addsId]="'repose'"></adds>
 
   <!-- Psalms 2-->
   <psalm [psalmNumber]="psalm"
          [psalmPart]="1"
-         *ngFor="let psalm of kafisma.psalm2"
-         [settings]="settings">
+         *ngFor="let psalm of kafisma.psalm2">
   </psalm>
 
   <!-- Slava 2 -->
   <adds *ngIf="!settings.repose"
-        [addsId]="'slava'"
-        [settings]="settings"></adds>
+        [addsId]="'slava'"></adds>
   <adds *ngIf="settings.repose"
-        [addsId]="'repose'"
-        [settings]="settings"></adds>
+        [addsId]="'repose'"></adds>
 
   <!-- Psalms 3 -->
   <psalm [psalmNumber]="psalm"
          [psalmPart]="2"
-         *ngFor="let psalm of kafisma.psalm3"
-         [settings]="settings">
+         *ngFor="let psalm of kafisma.psalm3">
   </psalm>
 
   <div *ngIf="kafismaNumber === '20'">
     <!-- Slava end -->
-    <adds [addsId]="'slavaPre'"
-          [settings]="settings"></adds>
-    <psalm [psalmNumber]="151"
-           [settings]="settings">
+    <adds [addsId]="'slavaPre'"></adds>
+    <psalm [psalmNumber]="151">
     </psalm>
   </div>
 
   <!-- Slava end -->
-  <adds [addsId]="'slavaPre'"
-        [settings]="settings"></adds>
+  <adds [addsId]="'slavaPre'"></adds>
 
   <!-- Po kafisme -->
   <div class="red center">{{kafismaEnd.poKafisme}}</div>
 
   <!-- Trisvyatoe -->
-  <adds [addsId]="'trisv'"
-        [settings]="settings"></adds>
+  <adds [addsId]="'trisv'"></adds>
 
   <!-- Tropar-->
   <div [innerHTML]="kafismaEnd.trop | safeHtml"
@@ -67,8 +56,7 @@
   <!-- Molitva sa upokoy -->
   <adds *ngIf="settings.repose"
         [addsId]="'reposeM'"
-        class="forceRu"
-        [settings]="settings">
+        class="forceRu">
   </adds>
 
   <!--TODO: молитва 40 раз-->
