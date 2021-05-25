@@ -18,7 +18,7 @@ import {PsalmPopoverComponent} from './components/psalm-popover/psalm-popover.co
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule,
+    SharedModule.forRoot(),
     HammerModule
   ],
   providers: [

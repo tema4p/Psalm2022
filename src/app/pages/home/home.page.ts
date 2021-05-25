@@ -21,19 +21,28 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 export class HomePage {
   public settings;
   public isIntroHidden = '';
-  public bookmarks: Array<{item: any, component?: any, note: string}> = [];
-  public history: Array<{item: any, component?: any, note: string, page: number, progress: number}> = [];
-  public psalms: Array<{item: any, component?: any, note: string, isFavorite?: boolean}> = [];
+  public bookmarks: Array<{item: any; component?: any; note: string}> = [];
+  public history: Array<{item: any; component?: any; note: string; page: number; progress: number}> = [];
+  public psalms: Array<{item: any; component?: any; note: string; isFavorite?: boolean}> = [];
 
   constructor(public navCtrl: NavController,
               public toastCtrl: ToastController,
               public splashScreen: SplashScreen,
               public router: Router,
-              public settingsService: SettingsService) {
+              public settingsService: SettingsService
+  ) {
     this.loadBookmarks();
     this.loadPsalms();
     this.loadHistory();
     this.isIntroHidden = localStorage[`isIntroHidden`];
+
+    this.settingsService.getSettingsSubj().subscribe((settings) => {
+      console.log('getSettingsSubj', settings);
+      this.settings = settings;
+      this.loadBookmarks();
+      this.loadPsalms();
+      this.loadHistory();
+    });
   }
 
   ionViewDidEnter(): void {

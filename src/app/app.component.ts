@@ -23,7 +23,6 @@ export interface IPageNavItem {
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: [`app.component.scss`],
-  providers: [SettingsService, RateService],
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {

@@ -70,8 +70,8 @@
     <ion-item *ngIf="psalms.length === 0">
       У вас еще нет избранных псалмов, вы можете добавить псалом в избранное нажав на его заголовок с номером
     </ion-item>
-    <ng-container *ngFor="let p of psalms; trackBy: index" >
-      <ion-item-sliding (*ngIf)="p && p.item.ru">
+    <ng-container *ngFor="let p of psalms" >
+      <ion-item-sliding *ngIf="p && p.item.ru">
         <ion-item routerLink (click)="openPsalm(p)">
           {{p.item[settingsService.settings.textSource]}}
         </ion-item>
@@ -113,6 +113,8 @@
       Сверка текстов так же доступна из настроек в мобильном приложении или по ссылке:
       <a target="_blank" href="http://psalm.it4p.ru/test">http://psalm.it4p.ru/test</a>
       <br>Так же будем рады любым предложеням по работе приложения.
+      <br>Исходный код проекта доступен по ссылке:
+      <a target="_blank" href="https://github.com/tema4p/Psalm2022">https://github.com/tema4p/Psalm2022</a>
     </div>
     <div class="desc">
       <br>Выражаем ОГРОМНУЮ благодраность всем кто писал отчеты по ошибкам и исправлениям, все письма были прочитаны и многое исправленно, что-то запланированно к работе.
