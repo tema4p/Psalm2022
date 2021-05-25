@@ -252,7 +252,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
     this.initRotationHandler();
     // console.log('ngOnInit');
-    this.goKafisma(this.navParams.data.item.kafisma);
+    if (this.navParams.data.item.kafisma) {
+      this.goKafisma(this.navParams.data.item.kafisma);
+    }
   }
 
   ngAfterViewInit() {
@@ -508,7 +510,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public goKafisma(id: number): void {
-    console.log('goKafisma', id);
     this.kafisma = `${id}`;
     this.kafismaJson = (new kafismaRuJson()).data[this.kafisma];
     this.page = 0;
