@@ -46,9 +46,9 @@ export class AppComponent implements OnInit {
 
   }
 
-  menuOpened() {
+  async menuOpened() {
+    console.time('1');
     this.pages = [];
-    console.log('menuOpened', _.cloneDeep(this.settingsService.settings));
     const other = Contents.getOtherList();
     const kafizma = Contents.getKafizmaList();
 
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     this.pages.push({ item: other[`info`], url: '/page/info'});
     this.pages.push({ item: other[`6p`], url: '/page/6p'});
     this.pages.push({ item: other[`12p`], url: '/page/12p'});
-    console.log('this.pages', this.pages);
+    console.timeEnd('1');
   }
 
   initializeApp() {
