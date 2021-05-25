@@ -22,7 +22,9 @@ export class PsalmComponent implements OnChanges {
   psalm: any;
   psalm2: any;
 
-  constructor(private settingsService: SettingsService) {
+  constructor(
+    private settingsService: SettingsService
+  ) {
     this.settingsService.getSettingsSubj().subscribe((settings: ISettings) => {
       this.settings = settings;
       this.renderText();

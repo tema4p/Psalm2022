@@ -1,4 +1,4 @@
-<div *ngIf="kafisma">
+<div *ngIf="kafisma && settings">
 
   <h3>{{kafisma.title}}</h3>
 
@@ -32,7 +32,7 @@
          *ngFor="let psalm of kafisma.psalm3">
   </psalm>
 
-  <div *ngIf="kafismaNumber === '20'">
+  <div *ngIf="+kafismaNumber === 20">
     <!-- Slava end -->
     <adds [addsId]="'slavaPre'"></adds>
     <psalm [psalmNumber]="151">

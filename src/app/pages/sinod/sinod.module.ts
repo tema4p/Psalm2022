@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SinodPageRoutingModule } from './sinod-routing.module';
 
 import { SinodPage } from './sinod.page';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SinodPageRoutingModule
+    SinodPageRoutingModule,
+    SharedModule
   ],
   declarations: [SinodPage]
 })

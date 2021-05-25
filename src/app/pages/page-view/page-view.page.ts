@@ -35,7 +35,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public content = '';
   public title = '';
   public titleForceRu = false;
-  public settings: ISettings;
+  public settings: ISettings = this.settingsService.getSettings();
   public page = 0;
   public pagesTotal = 0;
   public enableInfo = true;
@@ -92,6 +92,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     public platform: Platform
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.settingsService.getSettingsSubj().subscribe((settings: ISettings) => {
+      this.settings = settings;
+    });
   }
 
   ionViewWillEnter() {
@@ -215,8 +218,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
           }
         };
         setTimeout(() => {
-          this.resetScrollPosition(history.progress)
-        }, 1000)
+          this.resetScrollPosition(history.progress);
+        }, 1000);
 
       } else {
         this.navParams = {
@@ -504,9 +507,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     return this.pagesTotal;
   }
 
-  public goKafisma(id: string): void {
+  public goKafisma(id: number): void {
     console.log('goKafisma', id);
-    this.kafisma = id;
+    this.kafisma = `${id}`;
     this.kafismaJson = (new kafismaRuJson()).data[this.kafisma];
     this.page = 0;
     this.loadContent();

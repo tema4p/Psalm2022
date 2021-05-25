@@ -58,8 +58,8 @@
         <ion-col>
           <ion-button fill="outline" size="small" *ngIf="+kafisma < 20"
                   class="forceRu"
-                  (click)="goKafisma(1 + (1*kafisma))">
-            Кафизма {{1 + (1*kafisma)}}
+                  (click)="goKafisma(1 + +kafisma)">
+            Кафизма {{1 + +kafisma}}
             &nbsp;&nbsp;
             <ion-icon name="arrow-forward-outline"></ion-icon>
           </ion-button>
@@ -68,11 +68,8 @@
     </ion-grid>
 
     <psalm *ngIf="navParams?.data.item?.psalm"
-           [psalmNumber]="navParams?.data.item.psalm"
-           [settings]="settingsService.settings">
+           [psalmNumber]="navParams?.data.item.psalm">
     </psalm>
-
-
 
     <div *ngIf="kafismaJson" class="psalms-list">
       Псалмы:
@@ -81,8 +78,7 @@
       <a *ngFor="let psalm of kafismaJson.psalm3" (click)="goToPsalm(psalm)" class="forceRu psalm-link">{{psalm}}</a>
     </div>
 
-    <kafisma *ngIf="kafisma" [kafismaNumber]="kafisma"
-             [settings]="settingsService.settings">
+    <kafisma *ngIf="kafisma" [kafismaNumber]="+kafisma">
     </kafisma>
 
     <div [innerHTML]="content | safeHtml"></div>
@@ -102,8 +98,8 @@
         <ion-col>
           <ion-button fill="outline" size="small" *ngIf="+kafisma < 20"
                   class="forceRu"
-                  (click)="goKafisma(1 + (1*kafisma))">
-            Кафизма {{1 + (1*kafisma)}}
+                  (click)="goKafisma(1 + +kafisma)">
+            Кафизма {{1 + +kafisma}}
             &nbsp;&nbsp;
             <ion-icon name="arrow-forward-outline"></ion-icon>
           </ion-button>

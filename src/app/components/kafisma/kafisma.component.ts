@@ -2,7 +2,8 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import kafismaRuJson from '../../data/kafisma-ru-json';
 import endsRu from '../../data/ends-ru-json';
 import endsCs from '../../data/ends-cs-json';
-import * as _ from 'lodash';
+import {ISettings} from '../../../models/ISettings';
+import {SettingsService} from '../../services/settings-service';
 
 @Component({
   selector: 'kafisma',
@@ -11,13 +12,20 @@ import * as _ from 'lodash';
 
 export class KafismaComponent implements OnChanges{
   @Input() kafismaNumber: number;
-  @Input() settings: any;
+  public settings: ISettings = this.settingsService.getSettings();
+
 
   strings: any[];
   kafisma: any;
   kafismaEnd: any;
 
-  constructor() { }
+  constructor(
+    private settingsService: SettingsService
+  ) {
+    this.settingsService.getSettingsSubj().subscribe((settings: ISettings) => {
+      this.settings = settings;
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.kafismaNumber) {

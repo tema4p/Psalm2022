@@ -23,8 +23,8 @@
     <ion-item *ngIf="history.length === 0">
       У вас еще нет истории чтения, выберите кафизму из меню
     </ion-item>
-    <ng-container *ngFor="let p of history; trackBy: index" >
-      <ion-item (*ngIf)="p && p.item.ru"
+    <ng-container *ngFor="let p of history" >
+      <ion-item *ngIf="p && p.item.ru"
                 (click)="openHistoryPage(p)"
                 routerLink>
         <div class="item-flex">
@@ -45,8 +45,8 @@
     <ion-item *ngIf="bookmarks.length === 0">
       У вас пока нет закладок, вы можете добавить кафизму нажав на соответствущую иконку в верхней части окна с открытой кафизмой
     </ion-item>
-    <ng-container *ngFor="let p of bookmarks; trackBy: index" >
-      <ion-item-sliding (*ngIf)="p && p.item.ru">
+    <ng-container *ngFor="let p of bookmarks" >
+      <ion-item-sliding *ngIf="p && p.item.ru">
         <ion-item routerLink (click)="openHistoryPage(p)">
           <span [ngClass]="{'irmologion' : (settingsService.settings.textSource === 'cs')}">
             {{p.item[settingsService.settings.textSource]}}
