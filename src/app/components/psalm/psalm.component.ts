@@ -29,6 +29,30 @@ export class PsalmComponent implements OnChanges {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.renderText();
+  }
+
+  getFontColor() {
+    if (this.settings.isCustomColor) {
+      if (this.settings.theme === 'normal') {
+        return this.settings.customColor;
+      } else {
+        return this.settings.customColorDark;
+      }
+    }
+  }
+
+  getFontSecondColor() {
+    if (this.settings.isCustomColor) {
+      if (this.settings.theme === 'normal') {
+        return this.settings.customColorSecond;
+      } else {
+        return this.settings.customColorDarkSecond;
+      }
+    }
+  }
+
   private renderText() {
     if (!this.settings) {
       return;
@@ -74,28 +98,6 @@ export class PsalmComponent implements OnChanges {
       _.each(this.strings, (item: any) => {
         item.v2 = item.n2 = undefined;
       });
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.renderText();
-  }
-  getFontColor() {
-    if (this.settings.isCustomColor) {
-      if (this.settings.theme === 'normal') {
-        return this.settings.customColor;
-      } else {
-        return this.settings.customColorDark;
-      }
-    }
-  }
-  getFontSecondColor() {
-    if (this.settings.isCustomColor) {
-      if (this.settings.theme === 'normal') {
-        return this.settings.customColorSecond;
-      } else {
-        return this.settings.customColorDarkSecond;
-      }
     }
   }
 }
