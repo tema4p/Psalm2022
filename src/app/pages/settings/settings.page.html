@@ -94,13 +94,6 @@
       <ion-checkbox [(ngModel)]="settings.fullscreen"></ion-checkbox>
     </ion-item>
 
-    <!-- Для русского языка -->
-
-    <!--<ion-item *ngIf="settings.textSource === 'ru'">-->
-    <!--<ion-label>Переносы в словах</ion-label>-->
-    <!--<ion-checkbox [(ngModel)]="settings.hyphens"></ion-checkbox>-->
-    <!--</ion-item>-->
-
     <ion-item *ngIf="settings.textSource === 'ru'">
       <ion-label>Раскрыть молитвы</ion-label>
       <ion-checkbox [(ngModel)]="settings.adds"></ion-checkbox>

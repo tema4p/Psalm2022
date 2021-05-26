@@ -1,6 +1,12 @@
 import {Component} from '@angular/core';
-import * as _ from 'lodash';
-import slovar from '../../data/slovar';
+import { each } from 'lodash';
+import Slovar from '../../data/slovar';
+
+export interface IWord {
+  word: string;
+  desc: string;
+  wordLower?: string;
+}
 
 @Component({
   selector: 'app-slovar',
@@ -9,46 +15,39 @@ import slovar from '../../data/slovar';
 })
 
 export class SlovarPage {
-
-  words: Array<{word: string, desc: string, wordLower: string}> = [];
-
+  public words: IWord[] = [];
   public query = '';
   public limit = 40;
   public start = 0;
-
-  private source: any[] = (new slovar()).data.words;
+  private source: IWord[] = (new Slovar()).data;
 
   constructor() {
-    _.each(this.source, (item) => {
+    each(this.source, (item) => {
       item.wordLower = item.word.toLowerCase();
     });
     this.words = this.filter('');
   }
 
-  getItems(ev: any): any[] {
+  getItems(ev: Event | any) {
     this.query = ev.target.value;
     this.start = 0;
     this.words = this.filter(ev.target.value);
-    return;
   }
 
-  filter(query: string): any[] {
-    console.log('filter', query);
-
+  filter(query: string): IWord[] {
     if (query && query.trim() !== '') {
-      return  this.source.filter((item) => {
-        return (item.wordLower.indexOf(query.toLowerCase()) > -1);
-      }).slice(this.start, this.start + this.limit);
+      return  this.source
+        .filter((item) => (item.wordLower.indexOf(query.toLowerCase()) > -1))
+        .slice(this.start, this.start + this.limit);
     } else {
       return this.source.slice(this.start, this.start + this.limit);
     }
   }
 
-  showMore(): void {
+  showMore() {
     this.start = this.start + this.limit;
-    _.each(this.filter(this.query), (item) => {
+    each(this.filter(this.query), (item) => {
       this.words.push(item);
     });
   }
-
 }

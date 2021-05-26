@@ -1,27 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams} from '@ionic/angular';
+import {Component} from '@angular/core';
+import {NavParams} from '@ionic/angular';
+import {SettingsService} from '../../services/settings-service';
 
 @Component({
   selector: 'app-sinod',
   templateUrl: './sinod.page.html',
   styleUrls: ['./sinod.page.scss'],
 })
-export class SinodPage implements OnInit {
-
+export class SinodPage {
   public content = '';
   public title = '';
-  public settings: any = {};
-
+  public settings = this.settingsService.getSettings();
   public psalmSn: string[] = (window as any).psalmSn;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams) {
-    this.settings = navParams.data.settings;
+  constructor(
+    public settingsService: SettingsService,
+    public navParams: NavParams
+  ) {
     this.content = this.psalmSn[navParams.data.psalm];
-    console.log('navParams', navParams);
   }
-
-  ngOnInit() {
-  }
-
 }

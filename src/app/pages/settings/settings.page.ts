@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SettingsService} from '../../services/settings-service';
 import {Platform} from '@ionic/angular';
+import {ISettings} from '../../models/ISettings';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
-  public settings: any;
+export class SettingsPage {
+  public settings: ISettings;
 
   public fontsRange: number[] = [];
   public lineHeightRange: number[] = [];
@@ -30,7 +31,6 @@ export class SettingsPage implements OnInit {
   }
 
   ionViewWillLeave() {
-    console.log('SettingsPage Will Leave');
     if (this.settings.textSource === 'cs') {
       this.settings.repose = false;
     }
@@ -40,8 +40,4 @@ export class SettingsPage implements OnInit {
   colorChanged(color: string) {
     this.settings.customColor = color;
   }
-
-  ngOnInit() {
-  }
-
 }

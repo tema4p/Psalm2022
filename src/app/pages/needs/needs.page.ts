@@ -1,20 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-needs',
   templateUrl: './needs.page.html',
   styleUrls: ['./needs.page.scss'],
 })
-export class NeedsPage implements OnInit {
+export class NeedsPage {
 
-  constructor(public router: Router) { }
+  constructor(
+    public router: Router
+  ) { }
 
-  ngOnInit() {
-  }
-
-  openPage(page: any): void {
-    console.log('page', page);
+  openPage(page: number): void {
     this.router.navigate(['/page/psalm'],
       {
         queryParams: {
