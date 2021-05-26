@@ -4,7 +4,7 @@ import psalmCsJson from '../../data/psalm-cs-json';
 import psalmSnJson from '../../data/psalm-sn-json';
 import * as _ from 'lodash';
 import {SettingsService} from '../../services/settings-service';
-import {ISettings} from '../../../models/ISettings';
+import {ISettings} from '../../models/ISettings';
 
 @Component({
   selector: 'psalm',

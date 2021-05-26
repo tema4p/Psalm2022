@@ -18,7 +18,7 @@ import kafismaRuJson from 'src/app/data/kafisma-ru-json';
 import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popover.component';
 import {Contents} from '../../../content/contents';
 import {ActivatedRoute, Route, Router} from '@angular/router';
-import {ISettings} from '../../../models/ISettings';
+import {ISettings} from '../../models/ISettings';
 
 @Component({
   selector: 'app-page-view',
@@ -233,8 +233,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     this.route.params.subscribe(params => {
       console.log('params', params);
       const other = Contents.getOtherList();
-      const kafizma = Contents.getKafizmaList();
-      const item = kafizma[params.id] || other[params.id];
+      const kafisma = Contents.getKafismaList();
+      const item = kafisma[params.id] || other[params.id];
 
       if (item) {
         this.navParams = {
@@ -525,7 +525,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   updateTitle() {
     if (this.kafisma) {
-      const item = Contents.getItem(this.kafisma);
+      const item = Contents.getKafismaItem(this.kafisma);
       this.title = item[this.settings.textSource];
     } else if (this.navParams.data.item.psalm) {
       this.title = this.navParams.data.item[this.settings.textSource];

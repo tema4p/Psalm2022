@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import kafismaRuJson from '../../data/kafisma-ru-json';
 import endsRu from '../../data/ends-ru-json';
 import endsCs from '../../data/ends-cs-json';
-import {ISettings} from '../../../models/ISettings';
+import {ISettings} from '../../models/ISettings';
 import {SettingsService} from '../../services/settings-service';
 
 @Component({

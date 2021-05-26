@@ -4,11 +4,12 @@ import {Platform} from '@ionic/angular';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 import {Observable, Subject} from 'rxjs';
-import {ISettings} from '../../models/ISettings';
+import {ISettings} from '../models/ISettings';
+import {IObjectMap} from '../models/IObjectMap';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const NavigationBar;
 
-const psalmsRange = {
+const psalmsRange: IObjectMap<string> = {
   1:  '1-8',
   2:  '9-16',
   3:  '17-23',
@@ -36,8 +37,7 @@ const psalmsRange = {
 })
 export class SettingsService {
   private $settings = new Subject<ISettings>();
-
-  public settings: ISettings = {
+  private settings: ISettings = {
     fontSize: '18',
     fontFamily: 'Times New Roman',
     textSource: 'ru',
@@ -71,7 +71,6 @@ export class SettingsService {
     public platform: Platform
   ) {
     this.loadSettings();
-    console.log('SettingsService init');
     this.updateTheme();
     this.updateStatusBar();
   }
@@ -80,21 +79,19 @@ export class SettingsService {
     return this.$settings;
   }
 
-  saveSettings(settings: ISettings) {
+  public saveSettings(settings: ISettings) {
     _.extend(this.settings, settings);
     this.$settings.next(this.settings);
-
-    this.fixAndroidCsJustify();
-
-    localStorage[`settings`] = JSON.stringify(this.settings);
     console.log('SaveSettings', this.settings);
+    this.fixAndroidCsJustify();
+    localStorage.settings = JSON.stringify(this.settings);
     this.updateTheme();
     this.updateStatusBar();
   }
 
-  loadSettings(): any {
-    if (localStorage[`settings`]) {
-      _.extend(this.settings, JSON.parse(localStorage[`settings`]));
+  public loadSettings() {
+    if (localStorage.settings) {
+      _.extend(this.settings, JSON.parse(localStorage.settings));
       console.log('LoadSettings', this.settings);
     } else {
       console.log('Default Settings', this.settings);
@@ -103,7 +100,7 @@ export class SettingsService {
     this.$settings.next(this.settings);
   }
 
-  getSettings(): ISettings {
+  public getSettings(): ISettings {
     this.fixAndroidCsJustify();
     if (this.settings.textSource === 'cs') {
       this.settings.repose = false;
@@ -111,17 +108,17 @@ export class SettingsService {
     return _.clone(this.settings);
   }
 
-  getPsalmsRange(kafizma: string): any {
-    return psalmsRange[kafizma];
+  public getPsalmsRange(kafisma: string): string {
+    return psalmsRange[kafisma];
   }
 
-  updateTheme(): void {
+  public updateTheme() {
     $('body')
       .toggleClass('dark', this.settings.theme === 'dark')
       .toggleClass('normal', this.settings.theme === 'normal');
   }
 
-  updateStatusBar(): void {
+  public updateStatusBar() {
     if (typeof NavigationBar === 'undefined') {
       return;
     }
@@ -134,9 +131,10 @@ export class SettingsService {
     }
   }
 
-  fixAndroidCsJustify() {
+  public fixAndroidCsJustify() {
     if (this.platform.is('android')
-      && (this.settings.textSource === 'cs' || this.settings.textSource2 === 'cs')) {
+      && (this.settings.textSource === 'cs' || this.settings.textSource2 === 'cs')
+    ) {
       this.settings.justify = false;
     }
   }

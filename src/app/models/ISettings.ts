@@ -1,3 +1,4 @@
+import {IHistory} from './IHistory';
 
 export interface ISettings {
   fontSize: string;
@@ -23,7 +24,7 @@ export interface ISettings {
   fullscreen: boolean;
   lastPlace: boolean;
   bookMode: boolean;
-  bookmarks: any[];
-  history: any[];
-  psalms: any[];
+  bookmarks: number[];
+  history: IHistory[];
+  psalms: string[];
 }

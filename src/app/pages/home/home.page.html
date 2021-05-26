@@ -28,8 +28,8 @@
                 (click)="openHistoryPage(p)"
                 routerLink>
         <div class="item-flex">
-          <span class="title" [ngClass]="{'irmologion' : (settingsService.settings.textSource === 'cs')}">
-          {{p.item[settingsService.settings.textSource]}}
+          <span class="title" [ngClass]="{'irmologion' : (settings.textSource === 'cs')}">
+          {{p.item[settings.textSource]}}
           </span>
           <div class="read-date">{{p.note}}</div>
         </div>
@@ -48,8 +48,8 @@
     <ng-container *ngFor="let p of bookmarks" >
       <ion-item-sliding *ngIf="p && p.item.ru">
         <ion-item routerLink (click)="openHistoryPage(p)">
-          <span [ngClass]="{'irmologion' : (settingsService.settings.textSource === 'cs')}">
-            {{p.item[settingsService.settings.textSource]}}
+          <span [ngClass]="{'irmologion' : (settings.textSource === 'cs')}">
+            {{p.item[settings.textSource]}}
           </span>
           <ion-note>{{p.note}}</ion-note>
         </ion-item>
@@ -67,13 +67,13 @@
       <ion-icon slot="start" name="star"></ion-icon>
       Избранные псалмы
     </ion-item>
-    <ion-item *ngIf="psalms.length === 0">
+    <ion-item *ngIf="favoritePsalms.length === 0">
       У вас еще нет избранных псалмов, вы можете добавить псалом в избранное нажав на его заголовок с номером
     </ion-item>
-    <ng-container *ngFor="let p of psalms" >
+    <ng-container *ngFor="let p of favoritePsalms" >
       <ion-item-sliding *ngIf="p && p.item.ru">
         <ion-item routerLink (click)="openPsalm(p)">
-          {{p.item[settingsService.settings.textSource]}}
+          {{p.item[settings.textSource]}}
         </ion-item>
         <ion-item-options>
           <ion-button color="light" icon-left (click)="removePsalm(p)">

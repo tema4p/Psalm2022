@@ -1,87 +1,96 @@
-import { Component } from '@angular/core';
-// import { SettingsPage } from '../settings/settings';
-// import { Contents } from '../../content/contents';
-// import { PageView } from '../../pages/page-view/page-view';
-// import { SettingsService } from '../../app/services/settingsService';
-import {NavController, ToastController} from '@ionic/angular';
+import {Component} from '@angular/core';
+import {ToastController} from '@ionic/angular';
 import {Contents} from '../../../content/contents';
 import {SettingsService} from '../../services/settings-service';
 
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {each, sortBy, without } from 'lodash';
+import {IKafismaItem} from '../../models/IKafismaItem';
 
+export interface IBookMark {
+  item: IKafismaItem;
+  note: string;
+}
 
+export interface IHistoryItem {
+  item: IKafismaItem;
+  note: string;
+  page: number;
+  progress: number;
+}
+
+export interface IFavoritePsalm {
+  item: any;
+  note: string;
+  isFavorite?: boolean;
+}
+
+@UntilDestroy()
 @Component({
-  selector: 'page-home',
+  selector: 'app-page-home',
   styleUrls: ['home.page.scss'],
   templateUrl: 'home.page.html'
 })
 export class HomePage {
-  public settings;
+  public settings = this.settingsService.getSettings();
   public isIntroHidden = '';
-  public bookmarks: Array<{item: any; component?: any; note: string}> = [];
-  public history: Array<{item: any; component?: any; note: string; page: number; progress: number}> = [];
-  public psalms: Array<{item: any; component?: any; note: string; isFavorite?: boolean}> = [];
+  public bookmarks: IBookMark[] = [];
+  public history: IHistoryItem[] = [];
+  public favoritePsalms: IFavoritePsalm[] = [];
 
-  constructor(public navCtrl: NavController,
-              public toastCtrl: ToastController,
-              public splashScreen: SplashScreen,
-              public router: Router,
-              public settingsService: SettingsService
+  constructor(
+    public toastCtrl: ToastController,
+    public splashScreen: SplashScreen,
+    public router: Router,
+    public settingsService: SettingsService
   ) {
     this.loadBookmarks();
     this.loadPsalms();
     this.loadHistory();
-    this.isIntroHidden = localStorage[`isIntroHidden`];
+    this.isIntroHidden = localStorage.isIntroHidden;
 
-    this.settingsService.getSettingsSubj().subscribe((settings) => {
-      console.log('getSettingsSubj', settings);
-      this.settings = settings;
-      this.loadBookmarks();
-      this.loadPsalms();
-      this.loadHistory();
-    });
+    this.settingsService.getSettingsSubj()
+      .pipe(untilDestroyed(this))
+      .subscribe((settings) => {
+        this.settings = settings;
+        this.loadBookmarks();
+        this.loadPsalms();
+        this.loadHistory();
+      });
   }
 
-  ionViewDidEnter(): void {
+  ionViewDidEnter() {
     this.splashScreen.hide();
-
-    console.log('ionViewDidEnter');
     this.loadBookmarks();
     this.loadPsalms();
     this.loadHistory();
-    if (this.settingsService.settings.lastPlace && !(window as any).justOpened && this.history[0]) {
+
+    if (this.settings.lastPlace && !(window as any).justOpened && this.history[0]) {
       (window as any).justOpened = true;
       this.openHistoryPage(this.history[0]);
     }
   }
 
-  loadBookmarks(): void {
-    const kafizma = Contents.getKafizmaList();
+  loadBookmarks() {
+    const kafisma = Contents.getKafismaList();
     this.bookmarks = [];
-    this.settings = this.settingsService.getSettings();
-    _.each(this.settings.bookmarks, (item) => {
+    each(this.settings.bookmarks, (item) => {
       this.bookmarks.push({
-        item: kafizma['kafisma' + item],
-        // component: PageView, TODO: fix
-        note: this.settingsService.getPsalmsRange(item)
+        item: Contents.getKafismaItem(`${item}`),
+        note: this.settingsService.getPsalmsRange(`${item}`)
       });
     });
     console.log('loadBookmarks', this.bookmarks);
   }
 
-  loadHistory(): void {
-    const kafizma = Contents.getKafizmaList();
+  loadHistory() {
     this.history = [];
-    this.settings = this.settingsService.getSettings();
-    console.log('this.settings.history', this.settings.history);
-    _.each(this.settings.history.slice(-7).reverse(), (item) => {
-      console.log('item', item);
+    each(this.settings.history.slice(-7).reverse(), (item) => {
       this.history.push({
-        item: kafizma['kafisma' + item.kafisma],
-        // component: PageView,
+        item: Contents.getKafismaItem(`${item.kafisma}`),
         note: moment(item.date).format('DD.MM.YY HH:mm'),
         progress: item.progress,
         page: item.page
@@ -90,27 +99,24 @@ export class HomePage {
     console.log('loadHistory', this.history);
   }
 
-  loadPsalms(): void {
-    this.psalms = [];
-    this.settings = this.settingsService.getSettings();
-    console.log('this.settings', this.settings);
-    _.each(this.settings.psalms, (item) => {
-      this.psalms.push({
+  loadPsalms() {
+    this.favoritePsalms = [];
+    each(this.settings.psalms, (item) => {
+      this.favoritePsalms.push({
         item: {
           psalm: item,
           ru: 'Псалом ' + (+item),
           cs: 'Псалом ' + (+item)
         },
         isFavorite: true,
-        // component: PageView,
         note: ''
       });
-      this.psalms = _.sortBy(this.psalms, (itemPs: any) => +itemPs.item.psalm);
+      this.favoritePsalms = sortBy(this.favoritePsalms, (itemPs: any) => +itemPs.item.psalm);
     });
-    console.log('loadPsalms', this.psalms);
+    console.log('loadPsalms', this.favoritePsalms);
   }
 
-  openHistoryPage(history: any): void {
+  openHistoryPage(history: IHistoryItem) {
     this.router.navigate(['/page/kafisma' + history.item.kafisma], {
       queryParams: {
         history: JSON.stringify(history)
@@ -118,8 +124,7 @@ export class HomePage {
     });
   }
 
-  openPsalm(page: any): void {
-    console.log('page', page);
+  openPsalm(page: IFavoritePsalm) {
     page.item.isFavorite = true;
 
     this.router.navigate(['/page/psalm/' + page.item.psalm], {
@@ -127,8 +132,8 @@ export class HomePage {
     });
   }
 
-  async removeBookmark(page) {
-    this.settings.bookmarks = _.without(this.settings.bookmarks, +page.item.kafisma);
+  async removeBookmark(page: IBookMark) {
+    this.settings.bookmarks = without(this.settings.bookmarks, +page.item.kafisma);
     this.settingsService.saveSettings(this.settings);
     const toast = await this.toastCtrl.create({
       message: `Кафизма ${ +page.item.kafisma } убрана из закладок.`,
@@ -139,8 +144,7 @@ export class HomePage {
   }
 
   async removePsalm(page) {
-    console.log('page', page);
-    this.settings.psalms = _.without(this.settings.psalms, page.item.psalm);
+    this.settings.psalms = without(this.settings.psalms, page.item.psalm);
     this.settingsService.saveSettings(this.settings);
     const toast = await this.toastCtrl.create({
       message: `Псалом ${+page.item.psalm} убран из избранного.`,
@@ -150,22 +154,13 @@ export class HomePage {
     this.loadPsalms();
   }
 
-  goSettings(): void {
-    this.router.navigate(['/settings']);
-  }
-
-  ionViewWillEnter() {
-    console.log('enter');
-    this.settings = this.settingsService.getSettings();
-  }
-
-  hideIntro(): void {
+  hideIntro() {
     this.isIntroHidden = 'true';
-    localStorage[`isIntroHidden`] = this.isIntroHidden;
+    localStorage.isIntroHidden = this.isIntroHidden;
   }
 
-  showIntro(): void {
+  showIntro() {
     this.isIntroHidden = 'false';
-    localStorage[`isIntroHidden`] = this.isIntroHidden;
+    localStorage.isIntroHidden = this.isIntroHidden;
   }
 }

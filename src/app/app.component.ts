@@ -1,17 +1,13 @@
-/* tslint:disable:forin */
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {Config, MenuController, Platform, ToastController} from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {HomePage} from './pages/home/home.page';
 import {SettingsService} from './services/settings-service';
-import {RateService} from './services/rate-service';
 import {Contents} from '../content/contents';
 import {Router} from '@angular/router';
-import * as _ from 'lodash';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const NavigationBar;
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { each } from 'lodash';
 
 export interface IPageNavItem {
   item: any;
@@ -19,6 +15,7 @@ export interface IPageNavItem {
   url?: string;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,85 +23,64 @@ export interface IPageNavItem {
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  // @ViewChild(Nav) nav: Nav;
   backButtonPressedOnceToExit: boolean;
-  rootPage: any = HomePage;
 
-  pages: IPageNavItem[] = [];
+  public pages: IPageNavItem[] = [];
   public selectedIndex = 0;
+  public settings = this.settingsService.getSettings();
 
   constructor(
     public router: Router,
     public platform: Platform,
     public statusBar: StatusBar,
     public settingsService: SettingsService,
-    private rateService: RateService,
     private config: Config,
     private toastCtrl: ToastController,
     private menu: MenuController
   ) {
-
+    this.settingsService.getSettingsSubj()
+      .pipe(untilDestroyed(this))
+      .subscribe((settings) => {
+        this.settings = settings;
+      });
   }
 
   async menuOpened() {
-    console.time('1');
     this.pages = [];
     const other = Contents.getOtherList();
-    const kafizma = Contents.getKafizmaList();
+    const kafisma = Contents.getKafismaList();
 
-    this.pages.push({ item: other[`ustav`], url: '/page/ustav'});
-    this.pages.push({ item: other[`start`], url: '/page/start'});
+    this.pages.push({ item: other.ustav, url: '/page/ustav'});
+    this.pages.push({ item: other.start, url: '/page/start'});
 
-    for (const item in kafizma) {
+    each(kafisma, (item, key) => {
       this.pages.push({
-        item: kafizma[item],
-        url: '/page/' + item,
-        note: this.settingsService.getPsalmsRange(kafizma[item].kafisma)
+        item,
+        url: '/page/' + key,
+        note: this.settingsService.getPsalmsRange(item.kafisma)
       });
-    }
+    });
 
-    this.pages.push({ item: other[`end`], url: '/page/end'});
-    this.pages.push({ item: other[`songs`], url: '/page/songs'});
-    this.pages.push({ item: other[`posled`], url: '/page/posled'});
-    this.pages.push({ item: other[`pomannik`], url: '/page/pomannik'});
-    this.pages.push({ item: other[`info`], url: '/page/info'});
-    this.pages.push({ item: other[`6p`], url: '/page/6p'});
-    this.pages.push({ item: other[`12p`], url: '/page/12p'});
-    console.timeEnd('1');
+    this.pages.push({ item: other.end, url: '/page/end'});
+    this.pages.push({ item: other.songs, url: '/page/songs'});
+    this.pages.push({ item: other.posled, url: '/page/posled'});
+    this.pages.push({ item: other.pomannik, url: '/page/pomannik'});
+    this.pages.push({ item: other.info, url: '/page/info'});
+    this.pages.push({ item: other.p6, url: '/page/p6'});
+    this.pages.push({ item: other.p12, url: '/page/p12'});
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleBlackOpaque();
-      this.settingsService.updateStatusBar();
-      this.settingsService.updateTheme();
-
-      this.config.set('backButtonText', 'Назад');
-
-      // TODO: android back button
-      // this.platform.registerBackButtonAction(() => {
-      //
-      //   if (this.backButtonPressedOnceToExit) {
-      //     this.platform.exitApp();
-      //   } else if (this.nav.canGoBack()) {
-      //     this.nav.pop({});
-      //   } else if (this.nav.getActive().name != 'HomePage') {
-      //     this.openHome();
-      //   } else {
-      //     this.showToast();
-      //     this.backButtonPressedOnceToExit = true;
-      //     setTimeout(() => {
-      //       this.backButtonPressedOnceToExit = false;
-      //     },2000)
-      //   }
-      // });
-
-    });
+  async initializeApp() {
+    await this.platform.ready();
+    this.statusBar.styleBlackOpaque();
+    this.settingsService.updateStatusBar();
+    this.settingsService.updateTheme();
+    this.config.set('backButtonText', 'Назад');
   }
 
   ngOnInit() {
-      this.initializeApp();
-      this.menuOpened();
+    this.initializeApp();
+    this.menuOpened();
   }
 
   async showToast() {
@@ -117,15 +93,15 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
-  openHome(): void {
+  openHome() {
     this.router.navigate(['/home']);
   }
 
-  openSlovar(): void {
+  openSlovar() {
     this.router.navigate(['/slovar']);
   }
 
-  openNeeds(): void {
+  openNeeds() {
     this.router.navigate(['/needs']);
   }
 }

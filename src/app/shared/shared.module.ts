@@ -1,7 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SettingsService} from '../services/settings-service';
-import {RateService} from '../services/rate-service';
 import {ColorPickerComponent} from '../components/color-picker/color-picker.component';
 import {AddsComponent} from '../components/adds/adds.component';
 import {EndsComponent} from '../components/ends/ends.component';
@@ -52,8 +51,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        SettingsService,
-        RateService
+        SettingsService
       ]
     };
   }
