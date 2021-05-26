@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { PageViewPage } from './page-view.page';
+import {PageViewPage} from './page-view.page';
 
 describe('PageViewPage', () => {
   let component: PageViewPage;

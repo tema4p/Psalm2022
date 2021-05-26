@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import endsRu from '../../data/ends-ru-json';
 import endsCs from '../../data/ends-cs-json';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'ends',

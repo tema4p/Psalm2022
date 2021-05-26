@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { PageViewPage } from './page-view.page';
+import {PageViewPage} from './page-view.page';
 import {SharedModule} from '../../shared/shared.module';
 
 const routes: Routes = [

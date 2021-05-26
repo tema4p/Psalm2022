@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule, HammerModule} from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from './shared/shared.module';
 import {PsalmPopoverComponent} from './components/psalm-popover/psalm-popover.component';
 

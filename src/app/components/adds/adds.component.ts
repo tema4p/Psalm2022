@@ -1,8 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import addsRu from '../../data/adds-ru';
 import addsCs from '../../data/adds-cs';
 import {SettingsService} from '../../services/settings-service';
-import {distinctUntilChanged} from 'rxjs/operators';
 import {ISettings} from '../../models/ISettings';
 
 @Component({

@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {SettingsService} from '../services/settings-service';
 import {ColorPickerComponent} from '../components/color-picker/color-picker.component';
 import {AddsComponent} from '../components/adds/adds.component';

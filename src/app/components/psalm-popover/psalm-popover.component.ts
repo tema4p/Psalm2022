@@ -5,7 +5,6 @@ import * as $ from 'jquery';
 import {SettingsService} from '../../services/settings-service';
 // import {SinodPage} from '../../pages/sinod/sinod';
 import {ModalController, NavController, NavParams, ToastController} from '@ionic/angular';
-import {ViewController} from '@ionic/core';
 
 @Component({
   templateUrl: 'psalm-popover.component.html'

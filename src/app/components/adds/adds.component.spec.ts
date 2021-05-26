@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { AddsComponent } from './adds.component';
+import {AddsComponent} from './adds.component';
 
 describe('AddsComponent', () => {
   let component: AddsComponent;

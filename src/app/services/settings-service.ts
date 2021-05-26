@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Platform} from '@ionic/angular';
 import * as _ from 'lodash';
 import * as $ from 'jquery';

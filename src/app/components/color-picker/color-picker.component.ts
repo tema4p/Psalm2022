@@ -1,4 +1,4 @@
-import {Component, Output, Input, ViewChild, EventEmitter, OnInit, ElementRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 const POUCH = [{
   START: 'mousedown',

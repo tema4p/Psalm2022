@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import psalmRuJson from '../../data/psalm-ru-json';
 import psalmCsJson from 'src/app/data/psalm-cs-json';
 import psalmSnJson from 'src/app/data/psalm-sn-json';

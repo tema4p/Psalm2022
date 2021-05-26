@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { SlovarPageRoutingModule } from './slovar-routing.module';
+import {SlovarPageRoutingModule} from './slovar-routing.module';
 
-import { SlovarPage } from './slovar.page';
+import {SlovarPage} from './slovar.page';
 
 @NgModule({
   imports: [

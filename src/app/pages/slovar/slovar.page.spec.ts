@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { SlovarPage } from './slovar.page';
+import {SlovarPage} from './slovar.page';
 
 describe('SlovarPage', () => {
   let component: SlovarPage;

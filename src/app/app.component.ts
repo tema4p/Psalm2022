@@ -1,13 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {Config, MenuController, Platform, ToastController} from '@ionic/angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {HomePage} from './pages/home/home.page';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SettingsService} from './services/settings-service';
 import {Contents} from '../content/contents';
 import {Router} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import { each } from 'lodash';
+import {each} from 'lodash';
 
 export interface IPageNavItem {
   item: any;

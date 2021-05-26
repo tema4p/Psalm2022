@@ -1,4 +1,3 @@
-
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import * as _ from 'lodash';
@@ -12,12 +11,12 @@ import chinRu from 'src/app/data/chin-ru';
 import songsCs from '../../data/songs-cs';
 import songsRu from 'src/app/data/songs-ru';
 import psalmRuJson from 'src/app/data/psalm-ru-json';
-import {NavController, NavParams, Platform, PopoverController, ToastController} from '@ionic/angular';
+import {NavController, Platform, PopoverController, ToastController} from '@ionic/angular';
 import {SettingsService} from '../../services/settings-service';
 import kafismaRuJson from 'src/app/data/kafisma-ru-json';
 import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popover.component';
 import {Contents} from '../../../content/contents';
-import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ISettings} from '../../models/ISettings';
 
 @Component({

@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { NeedsPageRoutingModule } from './needs-routing.module';
+import {NeedsPageRoutingModule} from './needs-routing.module';
 
-import { NeedsPage } from './needs.page';
+import {NeedsPage} from './needs.page';
 
 @NgModule({
   imports: [

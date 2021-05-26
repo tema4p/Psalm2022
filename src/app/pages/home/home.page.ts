@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {each, sortBy, without } from 'lodash';
+import {each, sortBy, without} from 'lodash';
 import {IKafismaItem} from '../../models/IKafismaItem';
 
 export interface IBookMark {
