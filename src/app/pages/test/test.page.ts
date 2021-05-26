@@ -18,13 +18,13 @@ export class TestPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    each(this.psalmCsJson, (psalm, number) => {
-      this.psalms[number] = {
+    each(this.psalmCsJson, (psalm, i) => {
+      this.psalms[i] = {
         cs: psalm,
-        ru: this.psalmRuJson[number],
-        sn: this.psalmSnJson[number],
-      }
-      this.checkStrings(this.psalms[number]);
+        ru: this.psalmRuJson[i],
+        sn: this.psalmSnJson[i],
+      };
+      this.checkStrings(this.psalms[i]);
     });
   }
 
@@ -36,7 +36,5 @@ export class TestPage implements OnInit {
     if (cs !== ru || ru !== sn || cs !== sn) {
       console.log('Strings error: ', psalm);
     }
-
   }
-
 }
