@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 
-import addsCs from 'src/app/data/adds-cs';
-import addsRu from 'src/app/data/adds-ru';
+import AddsCs from 'src/app/data/adds-cs';
+import AddsRu from 'src/app/data/adds-ru';
 import chinCs from '../../data/chin-cs';
 import chinRu from 'src/app/data/chin-ru';
 import songsCs from '../../data/songs-cs';
@@ -13,7 +13,7 @@ import songsRu from 'src/app/data/songs-ru';
 import psalmRuJson from 'src/app/data/psalm-ru-json';
 import {NavController, Platform, PopoverController, ToastController} from '@ionic/angular';
 import {SettingsService} from '../../services/settings-service';
-import kafismaRuJson from 'src/app/data/kafisma-ru-json';
+import KafismaRuJson from 'src/app/data/kafisma-ru-json';
 import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popover.component';
 import {Contents} from '../../../content/contents';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -56,8 +56,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   public data: any = {
     adds: {
-      cs: (new addsCs()).data,
-      ru: (new addsRu()).data,
+      cs: (new AddsCs()).data,
+      ru: (new AddsRu()).data,
     },
     chin: {
       cs: (new chinCs()).data,
@@ -100,7 +100,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     console.log('ionViewWillEnter');
     this.initContent();
     this.kafisma = this.kafisma || this.navParams.data.item.kafisma;
-    this.kafismaJson = (new kafismaRuJson()).data[this.kafisma];
+    this.kafismaJson = (new KafismaRuJson()).data[this.kafisma];
     console.log('this.navParams.data', this.navParams.data);
     if (this.navParams.data.page || this.page > 0) {
       this.page = this.navParams.data.page;
@@ -510,7 +510,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   public goKafisma(id: number): void {
     this.kafisma = `${id}`;
-    this.kafismaJson = (new kafismaRuJson()).data[this.kafisma];
+    this.kafismaJson = (new KafismaRuJson()).data[this.kafisma];
     this.page = 0;
     this.loadContent();
     setTimeout(() => this.scrollTo(0));

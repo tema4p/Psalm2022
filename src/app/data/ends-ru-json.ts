@@ -1,5 +1,7 @@
-export default class endsRu {
-  public data = {'1': { data: ``,
+import {IEndsList} from '../models/IEnd';
+
+export default class EndsRu {
+  public data: IEndsList = {'1': { data: ``,
     poKafisme: 'По 1–й кафисме:',
     trop: `<div class="trop-normal">
 <p class="trop red center">Тропари, глас 1:</p>

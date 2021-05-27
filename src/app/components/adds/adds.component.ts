@@ -1,38 +1,43 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import addsRu from '../../data/adds-ru';
-import addsCs from '../../data/adds-cs';
+import {Component, Input, OnChanges} from '@angular/core';
+import AddsRu from '../../data/adds-ru';
+import AddsCs from '../../data/adds-cs';
 import {SettingsService} from '../../services/settings-service';
 import {ISettings} from '../../models/ISettings';
+import {IAddsList} from '../../models/IAdd';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+
+@UntilDestroy()
 @Component({
   selector: 'adds',
   templateUrl: './adds.component.html',
   styleUrls: ['./adds.component.scss'],
 })
-
-export class AddsComponent implements OnInit, OnChanges {
+export class AddsComponent implements OnChanges {
   @Input() addsId: string;
+
   public data: string;
   public settings: ISettings = this.settingsService.getSettings();
 
   constructor(
     private settingsService: SettingsService
-  ) {}
-  ngOnInit() {
-    this.settingsService.getSettingsSubj().subscribe((settings) => {
-      this.settings = settings;
-      this.ngOnChanges();
-    });
+  ) {
+    this.settingsService.getSettingsSubj()
+      .pipe(untilDestroyed(this))
+      .subscribe((settings) => {
+        this.settings = settings;
+        this.ngOnChanges();
+      });
   }
 
-  ngOnChanges(): void {
-    let source: any;
+  ngOnChanges() {
+    let source: IAddsList;
     if (this.addsId) {
       let add: string = this.addsId;
       if (this.settings.textSource === 'ru') {
-        source = (new addsRu()).data;
+        source = (new AddsRu()).data;
       } else if (this.settings.textSource === 'cs') {
-        source = (new addsCs()).data;
+        source = (new AddsCs()).data;
       }
       if (this.addsId === 'slava') {
         if (this.settings.repose) {

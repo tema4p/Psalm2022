@@ -1,47 +1,52 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import kafismaRuJson from '../../data/kafisma-ru-json';
-import endsRu from '../../data/ends-ru-json';
-import endsCs from '../../data/ends-cs-json';
+import KafismaRuJson from '../../data/kafisma-ru-json';
+import EndsRu from '../../data/ends-ru-json';
+import EndsCs from '../../data/ends-cs-json';
 import {ISettings} from '../../models/ISettings';
 import {SettingsService} from '../../services/settings-service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {IEnd, IEndsList} from '../../models/IEnd';
+import {IKafismaData} from '../../models/IKafismaData';
 
+
+@UntilDestroy()
 @Component({
   selector: 'kafisma',
   templateUrl: 'kafisma.component.html'
 })
-
 export class KafismaComponent implements OnChanges{
   @Input() kafismaNumber: number;
+
   public settings: ISettings = this.settingsService.getSettings();
-
-
-  strings: any[];
-  kafisma: any;
-  kafismaEnd: any;
+  public strings: any[];
+  public kafisma: IKafismaData;
+  public kafismaEnd: IEnd;
 
   constructor(
     private settingsService: SettingsService
   ) {
-    this.settingsService.getSettingsSubj().subscribe((settings: ISettings) => {
-      this.settings = settings;
-    });
+    this.settingsService.getSettingsSubj()
+      .pipe(untilDestroyed(this))
+      .subscribe((settings: ISettings) => {
+        this.settings = settings;
+        this.ngOnChanges();
+      });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.kafismaNumber) {
-      this.kafisma = (new kafismaRuJson()).data[this.kafismaNumber];
+  ngOnChanges(): void {
+    if (this.kafismaNumber) {
+      this.kafisma = (new KafismaRuJson()).data[this.kafismaNumber];
     }
     this.fetchKafismaEnd();
-
   }
 
-  fetchKafismaEnd(): void {
-    let source: any;
+  fetchKafismaEnd() {
+    let source: IEndsList;
 
     if (this.settings.textSource === 'ru') {
-      source = (new endsRu()).data;
+      source = (new EndsRu()).data;
     } else if (this.settings.textSource === 'cs') {
-      source = (new endsCs()).data;
+      source = (new EndsCs()).data;
     }
     this.kafismaEnd = source[this.kafismaNumber];
   }

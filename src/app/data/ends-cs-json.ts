@@ -1,5 +1,7 @@
-export default class endsCs {
-  public data = {  '1': {
+import {IEndsList} from '../models/IEnd';
+
+export default class EndsCs {
+  public data: IEndsList = {  '1': {
     poKafisme: 'По а7-й каfjсмэ,',
     trop: `<p>И# тропари2 сі‰, глaсъ а7:</p>
 <p>Въ беззак0ніихъ зачaвсz, ѓзъ блyдный, не дерзaю взирaти на высотY нбcную, но дерзaz на чlвэколю1біе твоE, зовY: б9е, њчи1сти мS грёшнаго, и3 сп7си1 мz.</p>

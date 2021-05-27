@@ -1,7 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SettingsService} from '../services/settings-service';
-import {ColorPickerComponent} from '../components/color-picker/color-picker.component';
 import {AddsComponent} from '../components/adds/adds.component';
 import {EndsComponent} from '../components/ends/ends.component';
 import {KafismaComponent} from '../components/kafisma/kafisma.component';
@@ -14,7 +13,6 @@ import {IonicModule} from '@ionic/angular';
 @NgModule({
   declarations: [
     AddsComponent,
-    ColorPickerComponent,
     EndsComponent,
     KafismaComponent,
     PsalmComponent,
@@ -27,7 +25,6 @@ import {IonicModule} from '@ionic/angular';
   ],
   exports: [
     AddsComponent,
-    ColorPickerComponent,
     EndsComponent,
     KafismaComponent,
     PsalmComponent,
@@ -39,7 +36,6 @@ import {IonicModule} from '@ionic/angular';
   ],
   entryComponents: [
     AddsComponent,
-    ColorPickerComponent,
     EndsComponent,
     KafismaComponent,
     PsalmComponent,

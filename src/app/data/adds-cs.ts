@@ -1,19 +1,21 @@
-export default class addsCs {
-  public data = {
-    'slovar': {"data": false},
-    'slava': {data: '<p class="red center">Слaва:</p>'},
-    'slavaShort': {data: '<p class="red center">Слaва:</p>'},
-    'slavaPre': {data: '<p class="red center">Слaва, и3 нhнэ: а3ллилyіа.</p>'},
-    'slavaPreShort': {data: '<p class="red center">Слaва, и3 нhнэ: а3ллилyіа.</p>'},
-    'repose': {data: '<p class="red center">Слaва:</p>'},
-    'trisv': {"data": `<p class="trisv">Трист70е. Прест7а1z трbце: Џ§е нaшъ:</p>`},
-    'trisvShort': {"data": `<p class="trisv">Трист70е. Прест7а1z трbце: Џ§е нaшъ:</p>`},
-    'reposeM': {
-      "data": ` 
+import {IAddsList} from '../models/IAdd';
+
+export default class AddsCs {
+  public data: IAddsList = {
+    slovar: {data: undefined},
+    slava: {data: '<p class="red center">Слaва:</p>'},
+    slavaShort: {data: '<p class="red center">Слaва:</p>'},
+    slavaPre: {data: '<p class="red center">Слaва, и3 нhнэ: а3ллилyіа.</p>'},
+    slavaPreShort: {data: '<p class="red center">Слaва, и3 нhнэ: а3ллилyіа.</p>'},
+    repose: {data: '<p class="red center">Слaва:</p>'},
+    trisv: {data: `<p class="trisv">Трист70е. Прест7а1z трbце: Џ§е нaшъ:</p>`},
+    trisvShort: {data: `<p class="trisv">Трист70е. Прест7а1z трbце: Џ§е нaшъ:</p>`},
+    reposeM: {
+      data: `
         Помяни, Господи душу усопшаго раба Твоего <span class="emphasis">(усопшия рабы Твоея, души усопших раб Твоих) (имярек) (поклон)</span>, и елико в житии сем яко человек согреши <span class="emphasis">(человецы согрешиша)</span>, Ты же, яко Человеколюбец Бог, прости его <span class="emphasis">(ю, их)</span> и помилуй <span class="emphasis">(поклон)</span>, вечныя муки избави <span class="emphasis">(поклон)</span>, небесному Царствию причастника <span class="emphasis">(причастницу, причастники)</span> учини <span class="emphasis">(поклон)</span>, и душам нашим полезная сотвори <span class="emphasis">(поклон)</span>.
      `
     },
-    'ustav': {
+    ustav: {
       data: `
         <h1>Ўстaвъ ст7hхъ nтє1цъ,</h1>
         <h2>бGомъ прeданный всBмъ хотsщымъ пёти pалти1рь,
@@ -22,7 +24,7 @@ export default class addsCs {
         <p class="buk">БGон0сніи, и3 прпdбніи, и3 пребlжeнніи nтцы2 нaши, всемY мjру свэти6ла, земленjи ѓгGли, нбcніи чл7вёцы, и3спeрва t ст7aгw д¦а преда1ніz и4ночествовати навhкше, и3 бlгодaтію б9іею tню1дъ просвэщeни бhша, хrтA всели1вше въ прекра6сныz и4хъ дyшы, чи1стагw рaди житіS и4хъ, и3 побёду показaша на діaвола, ѓще и3 мн0гими t негw2 и3скушeніи разжизaеми: но њдолёвше є3го2, kснёе злaта и3скушeна сіsютъ, и3 пaче снёга ўбэли1шасz, и3 невещeствєнна злaта кри6ла впери1вше мhслєннаz, на нб7сA возлетёша, ћкw небопaрніи nрли2, нaмъ њстaвиша ўстaвъ, бGомъ прeданнагw пёніz и4хъ, и3 ўмилє1нныz мlтвы, и4миже бGа млcтива себЁ сотвори1ша. џви бо и4хъ часы2 съ междочaсіемъ поsху, состaвивше и3збра6нныz pалмы2, съ тропари6 и3 съ мlтвами, и3 нарек0ша сіz6 часосл0вецъ: друзjи є3ди1нъ pалти1рь поsху, и3нjи же подви1жнэйшіи сyще, по всsкой каfjсмэ, трист70е съ покл0ны, и3 съ тропари6 покаz6нны, и3 съ мlтвами pалти1рь поsху.</p>
     `
     },
-    'start': {
+    start: {
       data: `
 
         <h1 id="molitva0">Разyмно да бyдетъ,</h1>
@@ -52,7 +54,7 @@ export default class addsCs {
         <p class="space" style="height:100px;"></p>
     `
     },
-    'end': {
+    end: {
       data: `
         <h2 id="molitvaend" style="margin-top:50px;">По совершeніи же нёколикихъ каfjсмъ, и3ли2 все1й pалти1ри:</h2>
 
@@ -79,8 +81,8 @@ export default class addsCs {
 
     `
     },
-    'info': {data: false},
-    'pomannik': {
+    info: {data: undefined},
+    pomannik: {
       data: `
         <h1>Помsнникъ</h1>
         <h3>Е#г0же д0лжно є4сть монaху и3ли2 мірzни1ну на всsкъ дeнь по скончaніи келeйнагw прaвила, со всsкимъ ўмилeніемъ чести2.</h3>
@@ -104,7 +106,7 @@ export default class addsCs {
         <hr><p>&nbsp;</p>
     `
     },
-    'posled': {
+    posled: {
       data: `
         <h1>Послёдованіе по и3сх0дэ души2 t тёла.</h1>
         <p class="com">(При чтении канона отдельно от панихиды)</p>
