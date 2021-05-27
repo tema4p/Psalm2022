@@ -10,7 +10,7 @@ import chinCs from '../../data/chin-cs';
 import chinRu from 'src/app/data/chin-ru';
 import songsCs from '../../data/songs-cs';
 import songsRu from 'src/app/data/songs-ru';
-import psalmRuJson from 'src/app/data/psalm-ru-json';
+import PsalmRuJson from 'src/app/data/psalm-ru-json';
 import {NavController, Platform, PopoverController, ToastController} from '@ionic/angular';
 import {SettingsService} from '../../services/settings-service';
 import KafismaRuJson from 'src/app/data/kafisma-ru-json';
@@ -71,7 +71,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   public dataJson: any = {
     psalm: {
-      ru: (new psalmRuJson()).data
+      ru: (new PsalmRuJson()).data
     }
   };
 

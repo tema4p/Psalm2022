@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import KafismaRuJson from '../../data/kafisma-ru-json';
 import EndsRu from '../../data/ends-ru-json';
 import EndsCs from '../../data/ends-cs-json';
@@ -18,7 +18,6 @@ export class KafismaComponent implements OnChanges{
   @Input() kafismaNumber: number;
 
   public settings: ISettings = this.settingsService.getSettings();
-  public strings: any[];
   public kafisma: IKafismaData;
   public kafismaEnd: IEnd;
 

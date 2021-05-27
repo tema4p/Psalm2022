@@ -1,5 +1,7 @@
-export default class psalmSnJson {
-  public data = {  '1': {
+import {IPsalmsList} from '../models/IPsalm';
+
+export default class PsalmSnJson {
+  public data: IPsalmsList = {  '1': {
     id: '1',
     strings: [
       {n: 0, t: 1, v: "Псалом Давида."},

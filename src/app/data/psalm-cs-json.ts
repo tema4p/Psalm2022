@@ -1,5 +1,7 @@
-export default class psalmCsJson {
-  public data = {
+import {IPsalmsList} from '../models/IPsalm';
+
+export default class PsalmCsJson {
+  public data: IPsalmsList = {
   "1": {
   id: "1",
   strings: [

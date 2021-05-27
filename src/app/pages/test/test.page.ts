@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import psalmRuJson from '../../data/psalm-ru-json';
-import psalmCsJson from 'src/app/data/psalm-cs-json';
-import psalmSnJson from 'src/app/data/psalm-sn-json';
+import PsalmRuJson from '../../data/psalm-ru-json';
+import PsalmCsJson from 'src/app/data/psalm-cs-json';
+import PsalmSnJson from 'src/app/data/psalm-sn-json';
 import {each, map} from 'lodash';
 
 @Component({
@@ -10,9 +10,9 @@ import {each, map} from 'lodash';
   styleUrls: ['./test.page.scss'],
 })
 export class TestPage implements OnInit {
-  public psalmCsJson = new psalmCsJson().data;
-  public psalmRuJson = new psalmRuJson().data;
-  public psalmSnJson = new psalmSnJson().data;
+  public psalmCsJson = new PsalmCsJson().data;
+  public psalmRuJson = new PsalmRuJson().data;
+  public psalmSnJson = new PsalmSnJson().data;
   public psalms = [];
 
   constructor() { }
