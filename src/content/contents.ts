@@ -1,4 +1,4 @@
-import {IOtherList} from '../app/models/IOtherItem';
+import {IOtherList} from '../app/models/IPageViewNavItem';
 import {IKafismaItem, IKafismaList} from '../app/models/IKafismaItem';
 
 const kafismaList: IKafismaList = {

@@ -1,15 +1,14 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 
 import AddsCs from 'src/app/data/adds-cs';
 import AddsRu from 'src/app/data/adds-ru';
-import chinCs from '../../data/chin-cs';
-import chinRu from 'src/app/data/chin-ru';
-import songsCs from '../../data/songs-cs';
-import songsRu from 'src/app/data/songs-ru';
+import ChinCs from '../../data/chin-cs';
+import ChinRu from 'src/app/data/chin-ru';
+import SongsCs from '../../data/songs-cs';
+import SongsRu from 'src/app/data/songs-ru';
 import PsalmRuJson from 'src/app/data/psalm-ru-json';
 import {NavController, Platform, PopoverController, ToastController} from '@ionic/angular';
 import {SettingsService} from '../../services/settings-service';
@@ -18,7 +17,15 @@ import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popove
 import {Contents} from '../../../content/contents';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISettings} from '../../models/ISettings';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {IKafismaData} from '../../models/IKafismaData';
+import {IPsalmsList} from '../../models/IPsalm';
+import {IObjectMap} from '../../models/IObjectMap';
+import { sortBy, without } from 'lodash';
+import {IPageViewNavParams} from '../../models/IPageViewNavParams';
 
+
+@UntilDestroy()
 @Component({
   selector: 'app-page-view',
   templateUrl: './page-view.page.html',
@@ -33,71 +40,68 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   public content = '';
   public title = '';
-  public titleForceRu = false;
   public settings: ISettings = this.settingsService.getSettings();
   public page = 0;
   public pagesTotal = 0;
   public enableInfo = true;
-  public hideInfoTimeOut: any;
-  public container: any;
+  public hideInfoTimeOut: number | any;
+  public container: JQuery | any;
   public kafisma: string;
-  public kafismaJson: any;
-
+  public kafismaJson: IKafismaData;
   public contentId: string;
-
   public prevPsalm: string;
   public nextPsalm: string;
-
-  public psalmJson: any;
-  public scrollTimeout: any;
+  public psalmJson: IPsalmsList;
+  public scrollTimeout: number | any;
   public forceTitleRu = false;
+  public scrollBoxStyle: IObjectMap<string>;
 
-  public scrollBoxStyle: any;
-
-  public data: any = {
+  public data = {
     adds: {
       cs: (new AddsCs()).data,
       ru: (new AddsRu()).data,
     },
     chin: {
-      cs: (new chinCs()).data,
-      ru: (new chinRu()).data,
+      cs: (new ChinCs()).data,
+      ru: (new ChinRu()).data,
     },
     songs: {
-      cs: (new songsCs()).data,
-      ru: (new songsRu()).data,
+      cs: (new SongsCs()).data,
+      ru: (new SongsRu()).data,
     }
   };
 
-  public dataJson: any = {
+  public dataJson = {
     psalm: {
       ru: (new PsalmRuJson()).data
     }
   };
 
-  private rotationHandler: any;
-  public navParams: any;
+  private rotationHandler: () => void;
+  public navParams: {
+    data: IPageViewNavParams
+  };
   public disableNavigation: boolean;
 
   constructor(
-    public navCtrl: NavController,
     private router: Router,
     private settingsService: SettingsService,
     private toastCtrl: ToastController,
     private viewElement: ElementRef,
     private chRef: ChangeDetectorRef,
-    public popoverCtrl: PopoverController,
     private route: ActivatedRoute,
+    public popoverCtrl: PopoverController,
     public platform: Platform
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.settingsService.getSettingsSubj().subscribe((settings: ISettings) => {
-      this.settings = settings;
-    });
+    this.settingsService.getSettingsSubj()
+      .pipe(untilDestroyed(this))
+      .subscribe((settings: ISettings) => {
+        this.settings = settings;
+      });
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
     this.initContent();
     this.kafisma = this.kafisma || this.navParams.data.item.kafisma;
     this.kafismaJson = (new KafismaRuJson()).data[this.kafisma];
@@ -154,7 +158,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
 
   registerNativeButtons() {
-    console.log('this.ionContent', this.ionContent);
     const $el = $(this.ionContent.el);
     document.addEventListener('volumeupbutton', () => {
       console.log('volumeupbutton');
@@ -168,7 +171,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     }, false);
     document.addEventListener('volumedownbutton', () => {
       console.log('volumedownbutton');
-
       if (this.settings.bookMode) {
         this.goPage(this.page + 1);
       } else {
@@ -204,11 +206,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       (screen as any).orientation.unlock();
     }
 
-    console.log('this.route', this.route);
-
     this.route.queryParams.subscribe(params => {
-      console.log('params', params); // {order: "popular"}
       this.disableNavigation = params.disableNavigation || false;
+
       if (params.history) {
         const history = JSON.parse(params.history);
         this.navParams = {
@@ -219,7 +219,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => {
           this.resetScrollPosition(history.progress);
         }, 1000);
-
       } else {
         this.navParams = {
           data: {
@@ -246,13 +245,12 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       this.container = $(this.viewElement.nativeElement).find('#contentContainer')[0];
-
     });
 
     this.initRotationHandler();
     // console.log('ngOnInit');
     if (this.navParams.data.item.kafisma) {
-      this.goKafisma(this.navParams.data.item.kafisma);
+      this.goKafisma(+this.navParams.data.item.kafisma);
     }
   }
 
@@ -261,8 +259,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('ngOnDestroy');
     window.removeEventListener('orientationchange', this.rotationHandler);
+
     if ((screen as any).orientation) {
       (screen as any).orientation.removeEventListener('change', this.rotationHandler);
     }
@@ -273,7 +271,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async initPopOver() {
-    console.log($(this.viewElement.nativeElement));
     $(this.viewElement.nativeElement).on('click touch', '[psalm]', async (e: any) => {
       e._element = this.viewElement.nativeElement;
       const popover = await this.popoverCtrl.create({
@@ -283,10 +280,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
           event: e,
           backdropDismiss: true
         },
-        // elem: this.viewElement.nativeElement,
-        event: e,
-        // toastCtrl: this.toastCtrl,
-        // settingsService: this.settingsService,
+        event: e
       });
 
       return await popover.present();
@@ -295,7 +289,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   initRotationHandler() {
     this.rotationHandler = (() => {
-      // console.log('view orientationchange');
       const progress: number  = this.page / this.pagesTotal;
       setTimeout(() => {
         this.calculatePagesTotal();
@@ -313,24 +306,12 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     if (this.navParams.data.item.add) {
       this.content = this.data.adds[this.settings.textSource][this.navParams.data.item.add].data;
     } else if (this.navParams.data.item.psalm) {
-      // this.content = this.getPsalm(this.navParams.data.item.psalm);
       this.psalmJson = this.dataJson.psalm.ru[this.navParams.data.item.psalm];
-      console.log('this.navParams.data', this.navParams.data);
-      console.log('this.psalmJson', this.psalmJson);
       if (this.navParams.data.item.isFavorite) {
-        console.log('isFavorite');
-        console.log('this.settings', this.settings.psalms);
-        this.settings.psalms = _.sortBy(this.settings.psalms, (item) => +item);
+        this.settings.psalms = sortBy(this.settings.psalms, (item) => +item);
         const index: number = this.settings.psalms.indexOf(this.navParams.data.item.psalm);
-        console.log('this.settings.psalms', this.settings.psalms);
-        console.log('index', index);
         this.prevPsalm = (index > 0) ? this.settings.psalms[index - 1] : undefined;
         this.nextPsalm = this.settings.psalms[index + 1] || undefined;
-      } else {
-        // const prev: number = +this.navParams.data.item.psalm - 1;
-        // const next: number = +this.navParams.data.item.psalm + 1;
-        // this.prevPsalm = `${prev > 0 ? prev : null}`;
-        // this.nextPsalm = `${next < 151 ? next : null}`;
       }
     } else if (this.navParams.data.item.chin) {
       this.content = this.data.chin[this.settings.textSource][this.navParams.data.item.chin].data;
@@ -373,14 +354,10 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  goSettings(): void {
-    // this.navCtrl.push(SettingsPage);
-  }
-
   async setBookMark() {
     if (!this.isMarked()) {
       this.settings.bookmarks.push(+this.kafisma);
-      this.settings.bookmarks = _.sortBy(this.settings.bookmarks);
+      this.settings.bookmarks = sortBy(this.settings.bookmarks);
       this.settingsService.saveSettings(this.settings);
       const toast = await this.toastCtrl.create({
         message: `Кафизма ${+this.kafisma} добавленна в закладки`,
@@ -388,7 +365,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       });
       toast.present();
     } else {
-      this.settings.bookmarks = _.without(this.settings.bookmarks, +this.kafisma);
+      this.settings.bookmarks = without(this.settings.bookmarks, +this.kafisma);
       this.settingsService.saveSettings(this.settings);
       const toast = await this.toastCtrl.create({
         message: `Кафизма ${+this.kafisma} убрана из закладок.`,
@@ -399,7 +376,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addHistory(scrollPosition?: number, scrollHeight?: number): void {
-    console.log('addHistory', scrollPosition, scrollHeight);
     if (!this.kafisma) {
       return;
     }
@@ -423,7 +399,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       if (this.settings.history.length > 20) {
         this.settings.history = this.settings.history.slice(-20, 0);
       }
-      console.log('this.settings.history', this.settings.history);
       this.settingsService.saveSettings(this.settings);
     } else if (+last.kafisma === +this.kafisma) {
       last.date = moment().toISOString();
@@ -431,7 +406,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       last.page = this.page;
       this.settingsService.saveSettings(this.settings);
     }
-    console.log('save progress', progress);
   }
 
   isMarked(): boolean {
@@ -444,7 +418,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public goPage(n): void {
-    console.log('goPage', n);
     if (!this.settings.bookMode) {
       this.page = 0;
       this.chRef.detectChanges();
@@ -454,7 +427,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     if (n > -1 && n <= this.pagesTotal - 1) {
       this.page = n;
     }
-    // console.log('goPage', n, ' / ', this.pagesTotal);
     this.calculatePagesTotal();
     setTimeout(() => {
       this.calculatePagesTotal();
@@ -517,8 +489,8 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public scrollTo(top: number): void {
-    const $el = $(this.ionContent.el).find('.inner-scroll');
-    console.log('$el', $el);
+    // const $el = $(this.ionContent.el).find('.inner-scroll');
+    // console.log('$el', $el);
     this.ionContent.scrollToPoint(0, top, 200);
   }
 
@@ -538,13 +510,11 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
   goToPsalm(psalm): void {
     const $target: any = $(`[psalmid="${psalm}"]`)[0];
-    console.log('$target', $target);
+
     if (!this.settings.bookMode) {
       this.scrollTo($target.offsetTop - 15);
-      console.log('page', $target.offsetTop);
     } else {
       const page = Math.floor($target.offsetLeft / ($target.offsetWidth + 10));
-
       this.goPage(page);
     }
   }

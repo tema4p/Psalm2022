@@ -1,6 +1,8 @@
-export default class chinCs {
-  public data = {
-  'p6': {"data": `<p>Слaва въ вhшнихъ бGу, и3 на земли2 ми1ръ, въ человёцэхъ бlговолeніе. <span class="emphasis">(Три1жды.)</span></p>
+import {IChinDataList} from '../models/IChin';
+
+export default class ChinCs {
+  public data: IChinDataList = {
+  p6: {data: `<p>Слaва въ вhшнихъ бGу, и3 на земли2 ми1ръ, въ человёцэхъ бlговолeніе. <span class="emphasis">(Три1жды.)</span></p>
   <p>ГDи, ўстнЁ мои2 tвeрзеши, и3 ўстA мо‰ возвэстsтъ хвалY твою2. <span class="emphasis">(Два1жды)</span>.</p>
 
 <p class="com" psalm id="psalom3"><br/>
@@ -51,7 +53,7 @@ export default class chinCs {
 
 <p>Ґллилyіа, ґллилyіа, ґллилyіа, слaва тебЁ б9е. <span class="emphasis">(Три1жды.)</span></span>
 `},
-  'p12': {"data": `
+  p12: {data: `
 <p>Ка1кw подоба1етъ пэ1ти двана1десzть pалмw1въ њс0бь, и5хже поz1ху прпdбніи nтцы2 пусты1нніи во дни2 и3 въ нощи2, њ ни1хже воспомина1етсz въ кни1гахъ nтeческихъ и3 въ житіz1хъ и3 муче1ніихъ ст7ы1хъ мно1гихъ. Се1й же чи1нъ принесе2 t ст7ы1z горы2 прпdбный досіfе1й а3рхімандрi1тъ пече1рскій.</p>
 <p>Мlтвами с™hхъ nтє1цъ нaшихъ, гDи ї}се хrтE б9е нaшъ, поми1луй нaсъ. Ґми1нь.</p>
 <p>Слaва тебЁ б9е нaшъ, слaва тебЁ.</p>
