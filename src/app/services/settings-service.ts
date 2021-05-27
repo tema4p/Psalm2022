@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Platform} from '@ionic/angular';
-import * as _ from 'lodash';
 import * as $ from 'jquery';
 import {Observable, Subject} from 'rxjs';
 import {ISettings} from '../models/ISettings';
 import {IObjectMap} from '../models/IObjectMap';
+import { extend } from 'jquery';
+import { clone } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const NavigationBar;
 
@@ -80,7 +81,7 @@ export class SettingsService {
   }
 
   public saveSettings(settings: ISettings) {
-    _.extend(this.settings, settings);
+    extend(this.settings, settings);
     this.$settings.next(this.settings);
     console.log('SaveSettings', this.settings);
     this.fixAndroidCsJustify();
@@ -91,7 +92,7 @@ export class SettingsService {
 
   public loadSettings() {
     if (localStorage.settings) {
-      _.extend(this.settings, JSON.parse(localStorage.settings));
+      extend(this.settings, JSON.parse(localStorage.settings));
       console.log('LoadSettings', this.settings);
     } else {
       console.log('Default Settings', this.settings);
@@ -105,7 +106,7 @@ export class SettingsService {
     if (this.settings.textSource === 'cs') {
       this.settings.repose = false;
     }
-    return _.clone(this.settings);
+    return clone(this.settings);
   }
 
   public getPsalmsRange(kafisma: string): string {

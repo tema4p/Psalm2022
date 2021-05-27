@@ -45,7 +45,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public pagesTotal = 0;
   public enableInfo = true;
   public hideInfoTimeOut: number | any;
-  public container: JQuery | any;
+  public container: JQuery<HTMLElement> | any;
   public kafisma: string;
   public kafismaJson: IKafismaData;
   public contentId: string;
@@ -509,7 +509,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
 
   goToPsalm(psalm): void {
-    const $target: any = $(`[psalmid="${psalm}"]`)[0];
+    const $target = $(`[psalmid="${psalm}"]`)[0];
 
     if (!this.settings.bookMode) {
       this.scrollTo($target.offsetTop - 15);
