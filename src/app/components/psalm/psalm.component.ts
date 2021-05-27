@@ -83,7 +83,7 @@ export class PsalmComponent implements OnChanges {
       item.v2 = item.n2 = undefined;
     });
 
-    if (this.settings.textSource2) {
+    if (['ru', 'sn'].indexOf(this.settings.textSource2) > 0 ) {
       this.addTranslation();
     }
   }
