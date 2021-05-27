@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { each } from 'lodash';
+import {each} from 'lodash';
 import Slovar from '../../data/slovar';
 
 export interface IWord {

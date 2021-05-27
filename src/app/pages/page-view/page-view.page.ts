@@ -10,7 +10,7 @@ import ChinRu from 'src/app/data/chin-ru';
 import SongsCs from '../../data/songs-cs';
 import SongsRu from 'src/app/data/songs-ru';
 import PsalmRuJson from 'src/app/data/psalm-ru-json';
-import {NavController, Platform, PopoverController, ToastController} from '@ionic/angular';
+import {Platform, PopoverController, ToastController} from '@ionic/angular';
 import {SettingsService} from '../../services/settings-service';
 import KafismaRuJson from 'src/app/data/kafisma-ru-json';
 import {PsalmPopoverComponent} from '../../components/psalm-popover/psalm-popover.component';
@@ -21,7 +21,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {IKafismaData} from '../../models/IKafismaData';
 import {IPsalmsList} from '../../models/IPsalm';
 import {IObjectMap} from '../../models/IObjectMap';
-import { sortBy, without } from 'lodash';
+import {sortBy, without} from 'lodash';
 import {IPageViewNavParams} from '../../models/IPageViewNavParams';
 
 

@@ -5,8 +5,7 @@ import * as $ from 'jquery';
 import {Observable, Subject} from 'rxjs';
 import {ISettings} from '../models/ISettings';
 import {IObjectMap} from '../models/IObjectMap';
-import { extend } from 'jquery';
-import { clone } from 'lodash';
+import {clone, extend} from 'lodash';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const NavigationBar;
 
