@@ -116,7 +116,7 @@ export class HomePage {
     console.log('loadPsalms', this.favoritePsalms);
   }
 
-  openHistoryPage(history: IHistoryItem) {
+  openHistoryPage(history: IHistoryItem | IBookMark) {
     this.router.navigate(['/page/kafisma' + history.item.kafisma], {
       queryParams: {
         history: JSON.stringify(history)

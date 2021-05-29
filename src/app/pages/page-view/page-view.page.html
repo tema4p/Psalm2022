@@ -68,7 +68,7 @@
     </ion-grid>
 
     <psalm *ngIf="navParams?.data.item?.psalm"
-           [psalmNumber]="navParams?.data.item.psalm">
+           [psalmNumber]="+navParams?.data.item.psalm">
     </psalm>
 
     <div *ngIf="kafismaJson" class="psalms-list">
