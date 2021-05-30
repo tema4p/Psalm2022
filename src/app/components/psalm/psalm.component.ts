@@ -83,14 +83,13 @@ export class PsalmComponent implements OnChanges {
       item.v2 = item.n2 = undefined;
     });
 
-    if (['ru', 'sn'].indexOf(this.settings.textSource2) > 0 ) {
+    if (['ru', 'sn'].indexOf(this.settings.textSource2) > -1 ) {
       this.addTranslation();
     }
   }
 
   addTranslation() {
     let source2: IPsalmsList
-
     if (this.settings.textSource2 === 'ru') {
       source2 = (new PsalmRuJson()).data;
     } else if (this.settings.textSource2 === 'sn') {
@@ -98,7 +97,6 @@ export class PsalmComponent implements OnChanges {
     }
     this.psalm2 = source2[this.psalmNumber];
     this.strings2 = this.psalm2.strings;
-
     if (this.psalmNumber === 118) {
       this.strings2 = filter(this.psalm2.strings, {p: this.psalmPart});
     }
