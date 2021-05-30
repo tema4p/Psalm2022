@@ -7,6 +7,7 @@ import {Contents} from '../content/contents';
 import {Router} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {each} from 'lodash';
+import {PowerManagement} from '@ionic-native/power-management/ngx';
 
 export interface IPageNavItem {
   item: any;
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
     public settingsService: SettingsService,
     private config: Config,
     private toastCtrl: ToastController,
+    private powerManagement: PowerManagement,
     private menu: MenuController
   ) {
     this.settingsService.getSettingsSubj()
@@ -42,6 +44,15 @@ export class AppComponent implements OnInit {
       .subscribe((settings) => {
         this.settings = settings;
       });
+    this.setWakeLock();
+  }
+
+  async setWakeLock() {
+    try {
+      await this.powerManagement.acquire();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async menuOpened() {

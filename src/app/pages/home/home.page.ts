@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ToastController} from '@ionic/angular';
+import {Platform, ToastController} from '@ionic/angular';
 import {Contents} from '../../../content/contents';
 import {SettingsService} from '../../services/settings-service';
 
@@ -9,6 +9,7 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {each, sortBy, without} from 'lodash';
 import {IKafismaItem} from '../../models/IKafismaItem';
+import {Subscription} from 'rxjs';
 
 export interface IBookMark {
   item: IKafismaItem;
@@ -37,6 +38,7 @@ export interface IFavoritePsalm {
 export class HomePage {
   public settings = this.settingsService.getSettings();
   public isIntroHidden = '';
+  public backButtonSubscription: Subscription;
   public bookmarks: IBookMark[] = [];
   public history: IHistoryItem[] = [];
   public favoritePsalms: IFavoritePsalm[] = [];
@@ -45,6 +47,7 @@ export class HomePage {
     public toastCtrl: ToastController,
     public splashScreen: SplashScreen,
     public router: Router,
+    public platform: Platform,
     public settingsService: SettingsService
   ) {
     this.loadBookmarks();
@@ -72,6 +75,16 @@ export class HomePage {
       (window as any).justOpened = true;
       this.openHistoryPage(this.history[0]);
     }
+
+    this.backButtonSubscription = this.platform.backButton
+      .pipe(untilDestroyed(this))
+      .subscribe(()=>{
+        navigator['app'].exitApp();
+      });
+  }
+
+  ionViewWillLeave(){
+    this.backButtonSubscription.unsubscribe();
   }
 
   loadBookmarks() {
