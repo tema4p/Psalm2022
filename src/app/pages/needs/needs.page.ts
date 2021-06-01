@@ -1,7 +1,10 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {Platform} from '@ionic/angular';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 
+@UntilDestroy()
 @Component({
   selector: 'app-needs',
   templateUrl: './needs.page.html',
@@ -10,8 +13,13 @@ import {Router} from '@angular/router';
 export class NeedsPage {
 
   constructor(
-    public router: Router
-  ) { }
+    public router: Router,
+    public platform: Platform
+  ) {
+    this.platform.backButton
+      .pipe(untilDestroyed(this))
+      .subscribe(()=> this.router.navigate(['/home']));
+  }
 
   openPage(page: number): void {
     this.router.navigate(['/page/psalm'],

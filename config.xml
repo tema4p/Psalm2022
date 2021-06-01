@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ru.it4p.psalm" version="1.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ru.it4p.psalm" version="1.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Псалтирь</name>
     <description>Псалтирь</description>
     <author email="psalm@it4p.ru" href="http://it4p.ru/">Псалтирь</author>
@@ -111,7 +111,7 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-navigationbar-color" spec="^0.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="at.gofg.sportscomputer.powermanagement" spec="~1.1.2" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="android" spec="7.1.4" />
-    <plugin name="at.gofg.sportscomputer.powermanagement" spec="~1.1.2" />
 </widget>

@@ -99,6 +99,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((settings: ISettings) => {
         this.settings = settings;
       });
+    this.platform.backButton
+      .pipe(untilDestroyed(this))
+      .subscribe(()=> this.router.navigate(['/home']));
   }
 
   ionViewWillEnter() {

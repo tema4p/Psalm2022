@@ -71,11 +71,6 @@ export class HomePage {
     this.loadPsalms();
     this.loadHistory();
 
-    if (this.settings.lastPlace && !(window as any).justOpened && this.history[0]) {
-      (window as any).justOpened = true;
-      this.openHistoryPage(this.history[0]);
-    }
-
     this.backButtonSubscription = this.platform.backButton
       .pipe(untilDestroyed(this))
       .subscribe(()=>{
@@ -88,7 +83,6 @@ export class HomePage {
   }
 
   loadBookmarks() {
-    const kafisma = Contents.getKafismaList();
     this.bookmarks = [];
     each(this.settings.bookmarks, (item) => {
       this.bookmarks.push({

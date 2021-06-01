@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {each} from 'lodash';
 import Slovar from '../../data/slovar';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {Router} from '@angular/router';
+import {Platform} from '@ionic/angular';
 
 export interface IWord {
   word: string;
@@ -8,12 +11,12 @@ export interface IWord {
   wordLower?: string;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-slovar',
   templateUrl: './slovar.page.html',
   styleUrls: ['./slovar.page.scss'],
 })
-
 export class SlovarPage {
   public words: IWord[] = [];
   public query = '';
@@ -21,11 +24,17 @@ export class SlovarPage {
   public start = 0;
   private source: IWord[] = (new Slovar()).data;
 
-  constructor() {
+  constructor(
+    public router: Router,
+    public platform: Platform
+  ) {
     each(this.source, (item) => {
       item.wordLower = item.word.toLowerCase();
     });
     this.words = this.filter('');
+    this.platform.backButton
+      .pipe(untilDestroyed(this))
+      .subscribe(()=> this.router.navigate(['/home']));
   }
 
   getItems(ev: Event | any) {

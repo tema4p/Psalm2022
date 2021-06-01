@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {each} from 'lodash';
 import {PowerManagement} from '@ionic-native/power-management/ngx';
+import * as moment from 'moment';
+import {IHistoryItem} from './pages/home/home.page';
 
 export interface IPageNavItem {
   item: any;
@@ -36,8 +38,7 @@ export class AppComponent implements OnInit {
     public settingsService: SettingsService,
     private config: Config,
     private toastCtrl: ToastController,
-    private powerManagement: PowerManagement,
-    private menu: MenuController
+    private powerManagement: PowerManagement
   ) {
     this.settingsService.getSettingsSubj()
       .pipe(untilDestroyed(this))
@@ -45,6 +46,25 @@ export class AppComponent implements OnInit {
         this.settings = settings;
       });
     this.setWakeLock();
+    this.openLastPlace();
+  }
+
+  async openLastPlace() {
+    const item = this.settings.history[this.settings.history.length - 1];
+    if (!item || !this.settings.lastPlace) {
+      return;
+    }
+    const historyItem: IHistoryItem = {
+      item: Contents.getKafismaItem(`${item.kafisma}`),
+      note: moment(item.date).format('DD.MM.YY HH:mm'),
+      progress: item.progress,
+      page: item.page
+    }
+    this.router.navigate(['/page/kafisma' + historyItem.item.kafisma], {
+      queryParams: {
+        history: JSON.stringify(historyItem)
+      }
+    });
   }
 
   async setWakeLock() {
