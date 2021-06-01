@@ -134,6 +134,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   };
 
   resetScrollPosition(progress: number) {
+    this.calculatePagesTotal();
     if (!this.settings.bookMode) {
       const height = $(this.contentContainer.nativeElement)[0].clientHeight;
       this.scrollTo(height * progress);
