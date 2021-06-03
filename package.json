@@ -9,7 +9,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "release": "ionic cordova build --release --prod android && npm run sign && npm run zipalign",
+    "sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass qwerasdf -keystore my-release-key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ru.it4p.psalm",
+    "zipalign": "~/android-sdks/build-tools/25.0.2/zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk APP_$(date +%F_%T).apk"
   },
   "private": true,
   "dependencies": {

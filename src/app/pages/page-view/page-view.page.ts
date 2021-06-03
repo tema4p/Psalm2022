@@ -45,6 +45,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public settings: ISettings = this.settingsService.getSettings();
   public page = 0;
   public pagesTotal = 0;
+  public progress = 0;
   public enableInfo = true;
   public hideInfoTimeOut: number | any;
   public container: JQuery<HTMLElement> | any;
@@ -101,6 +102,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe((settings: ISettings) => {
         this.settings = settings;
+        this.updateTitle();
       });
     this.platform.backButton
       .pipe(untilDestroyed(this))
@@ -119,7 +121,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     }
     setTimeout(() => {
       this.calculatePagesTotal();
-      if (this.history) {
+      if (this.progress) {
+        this.resetScrollPosition(this.progress);
+      } else if (this.history) {
         this.resetScrollPosition(this.history.progress);
       }
       this.chRef.detectChanges();
@@ -217,7 +221,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
 
     this.route.queryParams.subscribe(params => {
       this.disableNavigation = params.disableNavigation || false;
-
+      console.log('params.history', params.history);
       if (params.history) {
         this.history = JSON.parse(params.history);
         console.log('history', this.history);
@@ -232,6 +236,10 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
             item: params
           }
         };
+      }
+      if (params.progress) {
+        console.log('params.progress', params.progress);
+        this.progress = +params.progress;
       }
     });
 
@@ -383,11 +391,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openSettings() {
-    this.router.navigate(['/page/kafisma' + this.history.item.kafisma], {
-      queryParams: {
-        history: JSON.stringify(this.history)
-      }
-    });
     setTimeout(() => {
       this.router.navigate(['/settings'])
     }, 100);
@@ -395,6 +398,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addHistory(scrollPosition?: number, scrollHeight?: number): IHistory {
+    console.log('addHistory');
     if (!this.kafisma) {
       return;
     }
@@ -426,12 +430,16 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       this.settingsService.saveSettings(this.settings);
     }
 
-    this.history = {
-      item: Contents.getKafismaItem(`${this.kafisma}`),
-      note: moment().format('DD.MM.YY HH:mm'),
-      progress: progress,
-      page: this.page,
-    }
+    this.progress = progress;
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {
+          progress: this.progress
+        },
+        queryParamsHandling: '', // remove to replace all query params by provided
+      });
   }
 
   isMarked(): boolean {
@@ -457,10 +465,10 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.calculatePagesTotal();
       this.chRef.detectChanges();
+      this.addHistory();
     }, 1000);
 
     this.showInfo();
-    this.addHistory();
   }
 
   public showInfo(): void {
