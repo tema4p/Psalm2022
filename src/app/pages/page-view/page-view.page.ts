@@ -23,6 +23,8 @@ import {IPsalmsList} from '../../models/IPsalm';
 import {IObjectMap} from '../../models/IObjectMap';
 import {sortBy, without} from 'lodash';
 import {IPageViewNavParams} from '../../models/IPageViewNavParams';
+import {IHistory} from '../../models/IHistory';
+import {IHistoryItem} from '../home/home.page';
 
 
 @UntilDestroy()
@@ -55,6 +57,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   public scrollTimeout: number | any;
   public forceTitleRu = false;
   public scrollBoxStyle: IObjectMap<string>;
+  private history: IHistoryItem;
 
   public data = {
     adds: {
@@ -114,9 +117,11 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.page = 0;
     }
-
     setTimeout(() => {
       this.calculatePagesTotal();
+      if (this.history) {
+        this.resetScrollPosition(this.history.progress);
+      }
       this.chRef.detectChanges();
     }, 400);
   }
@@ -134,13 +139,13 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   };
 
   resetScrollPosition(progress: number) {
-    this.calculatePagesTotal();
     if (!this.settings.bookMode) {
       const height = $(this.contentContainer.nativeElement)[0].clientHeight;
       this.scrollTo(height * progress);
     } else {
       this.goPage(+(Math.floor(this.pagesTotal * progress)));
     }
+    console.log('resetScrollPosition', this.pagesTotal, this.page);
   }
 
   ionScroll(e) {
@@ -214,15 +219,13 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       this.disableNavigation = params.disableNavigation || false;
 
       if (params.history) {
-        const history = JSON.parse(params.history);
+        this.history = JSON.parse(params.history);
+        console.log('history', this.history);
         this.navParams = {
           data: {
-            item: history.item
+            item: this.history.item
           }
         };
-        setTimeout(() => {
-          this.resetScrollPosition(history.progress);
-        }, 1000);
       } else {
         this.navParams = {
           data: {
@@ -233,7 +236,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.route.params.subscribe(params => {
-      console.log('params', params);
+      console.log('this.route.params', params);
       const other = Contents.getOtherList();
       const kafisma = Contents.getKafismaList();
       const item = kafisma[params.id] || other[params.id];
@@ -252,7 +255,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.initRotationHandler();
-    // console.log('ngOnInit');
+
     if (this.navParams.data.item.kafisma) {
       this.goKafisma(+this.navParams.data.item.kafisma);
     }
@@ -379,7 +382,19 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  addHistory(scrollPosition?: number, scrollHeight?: number): void {
+  openSettings() {
+    this.router.navigate(['/page/kafisma' + this.history.item.kafisma], {
+      queryParams: {
+        history: JSON.stringify(this.history)
+      }
+    });
+    setTimeout(() => {
+      this.router.navigate(['/settings'])
+    }, 100);
+
+  }
+
+  addHistory(scrollPosition?: number, scrollHeight?: number): IHistory {
     if (!this.kafisma) {
       return;
     }
@@ -409,6 +424,13 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       last.progress = progress;
       last.page = this.page;
       this.settingsService.saveSettings(this.settings);
+    }
+
+    this.history = {
+      item: Contents.getKafismaItem(`${this.kafisma}`),
+      note: moment().format('DD.MM.YY HH:mm'),
+      progress: progress,
+      page: this.page,
     }
   }
 
@@ -456,7 +478,6 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     if (!this.container) {
       return 1;
     }
-
     if (!this.settings.bookMode) {
       this.page = 0;
       return;
@@ -474,13 +495,12 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       pages = (+$afterPage.offsetLeft - 10) / (+$afterPage.offsetWidth + 10);
     }
 
-    console.log('pages', pages);
     this.pagesTotal = Math.ceil(pages);
 
-    console.log('this.page', this.page);
     if (this.page > (this.pagesTotal - 1)) {
       this.page = this.pagesTotal - 1;
     }
+
     return this.pagesTotal;
   }
 

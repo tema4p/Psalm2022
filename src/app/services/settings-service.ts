@@ -80,13 +80,15 @@ export class SettingsService {
   }
 
   public saveSettings(settings: ISettings) {
-    extend(this.settings, settings);
-    this.$settings.next(this.settings);
-    console.log('SaveSettings', this.settings);
-    this.fixAndroidCsJustify();
-    localStorage.settings = JSON.stringify(this.settings);
-    this.updateTheme();
-    this.updateStatusBar();
+    setTimeout(() => {
+      extend(this.settings, settings);
+      this.$settings.next(this.settings);
+      console.log('SaveSettings', this.settings);
+      this.fixAndroidCsJustify();
+      localStorage.settings = JSON.stringify(this.settings);
+      this.updateTheme();
+      this.updateStatusBar();
+    }, 50)
   }
 
   public loadSettings() {

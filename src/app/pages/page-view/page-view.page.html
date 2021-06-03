@@ -13,7 +13,7 @@
                   *ngIf="navParams?.data.item.kafisma">
         <ion-icon name="bookmark-outline"></ion-icon>
       </ion-button>
-      <ion-button [routerLink]="['/settings']">
+      <ion-button (click)="openSettings()">
         <ion-icon name="settings"></ion-icon>
       </ion-button>
     </ion-buttons>
