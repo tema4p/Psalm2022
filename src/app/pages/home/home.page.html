@@ -36,7 +36,6 @@
       </ion-item>
     </ng-container>
   </ion-list>
-
   <ion-list>
     <ion-item lines="none">
       <ion-icon slot="start" name="bookmark-outline"></ion-icon>
@@ -94,7 +93,14 @@
       <li>Режимы чтения: постраничный (книжный), вертикальный, ночной.</li>
       <li>Настройки: размер шрифта, интервалы, переносы, гарнитура шрифта.</li>
       <li>Закладки, история чтения, избранные псалмы.</li>
+      <li>Все это доступно в настройках</li>
     </ul>
+    <div class="center">
+      <ion-button icon-start small outline class="button" [routerLink]="['/settings']">
+        <ion-icon name="settings"></ion-icon>
+        &nbsp;Настройки
+      </ion-button>
+    </div>
     <div class="header">Веб версия доступна по ссылке ниже:</div>
     <div class="center">
       <ion-button icon-start small outline class="button" target="_blank" href="http://psalm.it4p.ru/">
