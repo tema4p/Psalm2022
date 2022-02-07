@@ -6,6 +6,7 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {PowerManagement} from '@ionic-native/power-management/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -26,6 +27,7 @@ import {PsalmPopoverComponent} from './components/psalm-popover/psalm-popover.co
     StatusBar,
     SplashScreen,
     PowerManagement,
+    ScreenOrientation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

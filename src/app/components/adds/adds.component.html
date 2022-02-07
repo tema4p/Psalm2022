@@ -1,4 +1,4 @@
-<div *ngIf="data && settings">
+<div *ngIf="data && settings" [style.color]="getFontColor()">
 
   <div [innerHTML]="data | safeHtml"></div>
 

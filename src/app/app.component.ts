@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
 
   async initializeApp() {
     await this.platform.ready();
-    this.statusBar.styleBlackOpaque();
+    this.statusBar.styleDefault();
     this.settingsService.updateStatusBar();
     this.settingsService.updateTheme();
     this.config.set('backButtonText', 'Назад');

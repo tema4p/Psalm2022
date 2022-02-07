@@ -25,7 +25,7 @@ import {sortBy, without} from 'lodash';
 import {IPageViewNavParams} from '../../models/IPageViewNavParams';
 import {IHistory} from '../../models/IHistory';
 import {IHistoryItem} from '../home/home.page';
-
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @UntilDestroy()
 @Component({
@@ -95,6 +95,7 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
     private chRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     public popoverCtrl: PopoverController,
+    private screenOrientation: ScreenOrientation,
     public platform: Platform
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -135,11 +136,14 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public isLandscape() {
-    if ((window as any).screen.orientation) {
-      return (window as any).screen.orientation.type.indexOf('landscape') > -1;
-    } else {
-      return 1;
-    }
+    console.log('this.screenOrientation', this.screenOrientation);
+    const type = '' + this.screenOrientation.type;
+    return type.indexOf('landscape') > -1;
+    // if () {
+    //   return (window as any).screen.orientation.type.indexOf('landscape') > -1;
+    // } else {
+    //   return 1;
+    // }
   };
 
   resetScrollPosition(progress: number) {
@@ -215,9 +219,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if ((screen as any).orientation) {
-      (screen as any).orientation.unlock();
-    }
+    // if ((screen as any).orientation) {
+    //   (screen as any).orientation.unlock();
+    // }
 
     this.route.queryParams.subscribe(params => {
       this.disableNavigation = params.disableNavigation || false;
@@ -274,11 +278,11 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('orientationchange', this.rotationHandler);
-
-    if ((screen as any).orientation) {
-      (screen as any).orientation.removeEventListener('change', this.rotationHandler);
-    }
+    // window.removeEventListener('orientationchange', this.rotationHandler);
+    //
+    // if ((screen as any).orientation) {
+    //   (screen as any).orientation.removeEventListener('change', this.rotationHandler);
+    // }
 
     if (this.hideInfoTimeOut) {
       clearTimeout(this.hideInfoTimeOut);
@@ -312,9 +316,9 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       }, 400);
     });
     window.addEventListener('orientationchange', this.rotationHandler, false);
-    if ((screen as any).orientation) {
-      (screen as any).orientation.addEventListener('change', this.rotationHandler);
-    }
+    // if ((screen as any).orientation) {
+    //   (screen as any).orientation.addEventListener('change', this.rotationHandler);
+    // }
   }
 
   loadContent() {

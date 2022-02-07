@@ -71,8 +71,8 @@ export class SettingsService {
     public platform: Platform
   ) {
     this.loadSettings();
-    this.updateTheme();
-    this.updateStatusBar();
+    // this.updateTheme();
+    // this.updateStatusBar();
   }
 
   public getSettingsSubj(): Observable<ISettings> {
@@ -87,7 +87,7 @@ export class SettingsService {
       this.fixAndroidCsJustify();
       localStorage.settings = JSON.stringify(this.settings);
       this.updateTheme();
-      this.updateStatusBar();
+      // this.updateStatusBar();
     }, 50)
   }
 
@@ -118,9 +118,15 @@ export class SettingsService {
     $('body')
       .toggleClass('dark', this.settings.theme === 'dark')
       .toggleClass('normal', this.settings.theme === 'normal');
+    if (this.settings.theme === 'dark') {
+      this.statusBar.styleLightContent();
+    } else {
+      this.statusBar.styleDefault();
+    }
   }
 
   public updateStatusBar() {
+    console.log('this.statusBar', this.statusBar);
     if (typeof NavigationBar === 'undefined') {
       return;
     }

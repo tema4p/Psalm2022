@@ -11,7 +11,8 @@
       <ion-button (click)="setBookMark()"
                   [ngClass]="{'not-marked': !isMarked()}"
                   *ngIf="navParams?.data.item.kafisma">
-        <ion-icon name="bookmark-outline"></ion-icon>
+        <ion-icon name="bookmark" *ngIf="isMarked()"></ion-icon>
+        <ion-icon name="bookmark-outline" *ngIf="!isMarked()"></ion-icon>
       </ion-button>
       <ion-button (click)="openSettings()">
         <ion-icon name="settings"></ion-icon>
@@ -21,6 +22,7 @@
 </ion-header>
 
 <ion-content #ionContent
+             [forceOverscroll]="false"
              [scrollEvents]="true"
              [style.--ion-background-color]="getBgColor()"
              (ionScroll)="ionScroll($event)"
@@ -138,20 +140,36 @@
   <div class="pages-info" [ngClass]="{'hidden': (!enableInfo)}" *ngIf="settings.bookMode && pagesTotal > 0">
     <ion-button fill="outline" size="small"
             class="forceRu"
-            [ngClass]="{'disabled': (page === 0)}"
+            *ngIf="page > 0"
             (click)="goPage(page - 1)">
       <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
     </ion-button>
+
+    <ion-button fill="outline" size="small" *ngIf="+kafisma > 1 && page === 0"
+                class="forceRu"
+                (click)="goKafisma(+kafisma - 1)">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      &nbsp;&nbsp;
+      Кафизма {{+kafisma - 1}}
+    </ion-button>
+
 
     <ion-button fill="clear" size="small">
       {{page + 1}} / {{pagesTotal}}
     </ion-button>
 
     <ion-button fill="outline" size="small"
-            class="forceRu"
-            [ngClass]="{'disabled': (page + 1 === pagesTotal)}"
+            class="forceRu" *ngIf="(page + 1 < pagesTotal)"
             (click)="goPage(page + 1)">
       <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button fill="outline" size="small" *ngIf="(page + 1 === pagesTotal) && +kafisma < 20"
+                class="forceRu"
+                (click)="goKafisma(1 + +kafisma)">
+      Кафизма {{1 + +kafisma}}
+      &nbsp;&nbsp;
+      <ion-icon name="arrow-forward-outline"></ion-icon>
     </ion-button>
   </div>
   <div class="scroll-end" #scrollEnd></div>

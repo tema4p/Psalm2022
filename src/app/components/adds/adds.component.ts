@@ -62,4 +62,14 @@ export class AddsComponent implements OnChanges {
       this.data = source[add].data;
     }
   }
+
+  getFontColor() {
+    if (this.settings.isCustomColor) {
+      if (this.settings.theme === 'normal') {
+        return this.settings.customColor;
+      } else {
+        return this.settings.customColorDark;
+      }
+    }
+  }
 }
