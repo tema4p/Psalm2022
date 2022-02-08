@@ -1,4 +1,4 @@
-<ion-header #ionHeader [ngClass]="[settings.theme]">
+<ion-header #ionHeader [ngClass]="[settings.themeUI]">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button *ngIf="nextPsalm || prevPsalm"></ion-back-button>
@@ -27,7 +27,7 @@
              [scrollEvents]="true"
              [style.--ion-background-color]="getBgColor()"
              (ionScroll)="ionScroll($event)"
-             [ngClass]="[settings.theme, (isLandscape() ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
+             [ngClass]="[settings.themeUI, (isLandscape() ? 'landscape' : ''), (!settings.bookMode ? 'forceScrollBar' : 'contentBook')]">
   <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
   <div id="contentContainer"

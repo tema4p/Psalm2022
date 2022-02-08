@@ -44,14 +44,14 @@ export class SettingsService {
     textSource2: '0',
     translateOrientation: 'horizontal',
     lineHeight: 120,
-    theme: 'normal',
-    isCustomColor: false,
-    customColor: '#2f2f2f',
-    customColorSecond: '#17172f',
-    customColorBg: '#FFFDF0',
-    customColorDark: '#FFFDF0',
-    customColorDarkSecond: '#fcf6ff',
-    customColorDarkBg: '#000000',
+    themeUI: 'normal',
+    isCustomColors: false,
+    cColor: '#2f2f2f',
+    cColorSecond: '#17172f',
+    cColorBg: '#FFFDF0',
+    cColorDark: '#FFFDF0',
+    cColorDarkSecond: '#fcf6ff',
+    cColorDarkBg: '#000000',
     perenos: false,
     extraSpace: false,
     hyphens: true,
@@ -117,9 +117,9 @@ export class SettingsService {
 
   public updateTheme() {
     $('body')
-      .toggleClass('dark', this.settings.theme === 'dark')
-      .toggleClass('normal', this.settings.theme === 'normal');
-    if (this.settings.theme === 'dark') {
+      .toggleClass('dark', this.settings.themeUI === 'dark')
+      .toggleClass('normal', this.settings.themeUI === 'normal');
+    if (this.settings.themeUI === 'dark') {
       this.statusBar.styleLightContent();
     } else {
       this.statusBar.styleDefault();

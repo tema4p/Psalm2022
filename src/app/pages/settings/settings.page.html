@@ -58,7 +58,7 @@
 
     <ion-item>
       <ion-label>Цветовая схема:</ion-label>
-      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.theme">
+      <ion-select okText="Сохранить" cancelText="Отмена" [(ngModel)]="settings.themeUI">
         <ion-select-option value="dark">Ночная</ion-select-option>
         <ion-select-option value="normal">Обычная</ion-select-option>
       </ion-select>
@@ -104,36 +104,36 @@
       <ion-checkbox [(ngModel)]="settings.repose"></ion-checkbox>
     </ion-item>
 
-    <ion-item [ngStyle]="{background: settings.customColor}">
+    <ion-item [ngStyle]="{background: settings.cColor}">
       <ion-label>Выбрать цвета текста и фона</ion-label>
-      <ion-checkbox [(ngModel)]="settings.isCustomColor"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="settings.isCustomColors"></ion-checkbox>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="settings.isCustomColor">
+  <ion-list *ngIf="settings.isCustomColors">
     <ion-item>
       <ion-label>Цвет текста для светлой темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColor">
+      <input type="color" [(ngModel)]="settings.cColor">
     </ion-item>
     <ion-item>
       <ion-label>Цвет второго текста для светлой темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColorSecond">
+      <input type="color" [(ngModel)]="settings.cColorSecond">
     </ion-item>
     <ion-item>
       <ion-label>Цвет Фона для светлой темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColorBg">
+      <input type="color" [(ngModel)]="settings.cColorBg">
     </ion-item>
     <ion-item>
       <ion-label>Цвет текста для ночной темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColorDark">
+      <input type="color" [(ngModel)]="settings.cColorDark">
     </ion-item>
     <ion-item>
       <ion-label>Цвет второго текста для ночной темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColorDarkSecond">
+      <input type="color" [(ngModel)]="settings.cColorDarkSecond">
     </ion-item>
     <ion-item>
       <ion-label>Цвет Фона для ночной темы</ion-label>
-      <input type="color" [(ngModel)]="settings.customColorDarkBg">
+      <input type="color" [(ngModel)]="settings.cColorDarkBg">
     </ion-item>
   </ion-list>
 

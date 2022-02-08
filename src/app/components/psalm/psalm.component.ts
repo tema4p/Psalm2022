@@ -41,21 +41,21 @@ export class PsalmComponent implements OnChanges {
   }
 
   getFontColor() {
-    if (this.settings.isCustomColor) {
-      if (this.settings.theme === 'normal') {
-        return this.settings.customColor;
+    if (this.settings.isCustomColors) {
+      if (this.settings.themeUI === 'normal') {
+        return this.settings.cColor;
       } else {
-        return this.settings.customColorDark;
+        return this.settings.cColorDark;
       }
     }
   }
 
   getFontSecondColor() {
-    if (this.settings.isCustomColor) {
-      if (this.settings.theme === 'normal') {
-        return this.settings.customColorSecond;
+    if (this.settings.isCustomColors) {
+      if (this.settings.themeUI === 'normal') {
+        return this.settings.cColorSecond;
       } else {
-        return this.settings.customColorDarkSecond;
+        return this.settings.cColorDarkSecond;
       }
     }
   }

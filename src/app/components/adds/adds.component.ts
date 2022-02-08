@@ -64,11 +64,11 @@ export class AddsComponent implements OnChanges {
   }
 
   getFontColor() {
-    if (this.settings.isCustomColor) {
-      if (this.settings.theme === 'normal') {
-        return this.settings.customColor;
+    if (this.settings.isCustomColors) {
+      if (this.settings.themeUI === 'normal') {
+        return this.settings.cColor;
       } else {
-        return this.settings.customColorDark;
+        return this.settings.cColorDark;
       }
     }
   }

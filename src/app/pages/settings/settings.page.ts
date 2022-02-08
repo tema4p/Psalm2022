@@ -38,6 +38,6 @@ export class SettingsPage {
   }
 
   colorChanged(color: string) {
-    this.settings.customColor = color;
+    this.settings.cColor = color;
   }
 }
