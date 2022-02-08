@@ -564,4 +564,14 @@ export class PageViewPage implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
+
+  getFontColor() {
+    if (this.settings.isCustomColor) {
+      if (this.settings.theme === 'normal') {
+        return this.settings.customColor;
+      } else {
+        return this.settings.customColorDark;
+      }
+    }
+  }
 }

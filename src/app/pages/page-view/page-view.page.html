@@ -22,6 +22,7 @@
 </ion-header>
 
 <ion-content #ionContent
+
              [forceOverscroll]="false"
              [scrollEvents]="true"
              [style.--ion-background-color]="getBgColor()"
@@ -30,6 +31,7 @@
   <div class="scroll-box" [style]="scrollBoxStyle"></div>
 
   <div id="contentContainer"
+       [style.color]="getFontColor()"
        #contentContainer
        (swipeleft)="goPage(page + 1)"
        (swiperight)="goPage(page - 1)"

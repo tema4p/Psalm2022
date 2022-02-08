@@ -80,6 +80,7 @@ export class SettingsService {
   }
 
   public saveSettings(settings: ISettings) {
+    console.log('saveSettings', settings);
     setTimeout(() => {
       extend(this.settings, settings);
       this.$settings.next(this.settings);
