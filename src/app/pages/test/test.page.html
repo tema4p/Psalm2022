@@ -1,10 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Тестовая страница для сверки текстов
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <div>
     <table *ngFor="let p of psalms">
       <tr *ngIf="p?.cs">
         <td></td>
         <td></td>
+        <td></td>
         <td><b>Псалом {{p?.cs?.id}}</b></td>
+        <td></td>
       </tr>
       <tr *ngFor="let s of p?.cs?.strings; let i = index" >
         <td width="20" class="num" >{{s.n}}</td>
